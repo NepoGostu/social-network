@@ -1,13 +1,14 @@
 import React, {ChangeEvent} from 'react';
 import s from './MyPosts.module.css'
 import Post from './Post/Post';
-import {PostsType} from '../../../redux/state';
+import {ActionsTypes, addPostAC, PostsType} from '../../../redux/state';
 
 export type MyPostsType = {
     posts: PostsType[]
-    addPostCallback: (postMessage: string) => void
-    updateNewPostText: (newText: string) => void
+   /* addPostCallback: (postMessage: string) => void
+    updateNewPostText: (newText: string) => void*/
     newPostText: string
+    dispatch: (action: ActionsTypes) => void
 }
 
 const MyPosts = (props: MyPostsType) => {
@@ -20,10 +21,13 @@ const MyPosts = (props: MyPostsType) => {
     />);
 
     const addPost = () => {
-        props.addPostCallback(props.newPostText)
+        // props.addPostCallback(props.newPostText)
+        // props.dispatch({type:'ADD-POST', newPostText: props.message})
+        props.dispatch(addPostAC(props.newPostText))
     }
     let onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.updateNewPostText(e.currentTarget.value)
+        // props.updateNewPostText(e.currentTarget.value)
+        props.dispatch({type: 'UPDATE-NEW-POST-TEXT', newText:e.currentTarget.value})
     }
     return (
         <div className={s.postsBlock}>

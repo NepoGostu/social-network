@@ -6,7 +6,7 @@ import s from './ProfileInfo.module.css'
 const ProfileInfo = () => {
     return (
         <div>
-            <div className={s.profileImage}><img src='https://i1.wallbox.ru/wallpapers/main/201128/trava-siniy-minimalizm-9068735.jpg'
+            <div className={s.profileImage}><img src='https://uploads.ar12gaming.com/articles/cJMmCp53-CV4EXHtUAAA766k.medium.jpg'
                       alt="beautiful world"></img></div>
             <div className={s.discriptionBlock}>
                 ava + description

@@ -8,7 +8,7 @@ import {BrowserRouter, Route} from 'react-router-dom';
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
-import {StoryType} from './redux/state'
+import {ActionsTypes, StoryType} from './redux/state'
 
 
 export type MenuItemType = {
@@ -18,9 +18,11 @@ export type MenuItemType = {
 }
 
 export type PropsType = {
-    addPostCallback: () => void
-    updateNewPostText: (newText: string) => void
+    /* addPostCallback: () => void
+     updateNewPostText: (newText: string) => void*/
     store: StoryType
+    dispatch: (action: ActionsTypes) => void
+
 }
 
 const App: React.FC<PropsType> = (props: PropsType) => {
@@ -46,13 +48,15 @@ const App: React.FC<PropsType> = (props: PropsType) => {
                            render={() => <Profile
                                newPostText={state.profileData.newPostText}
                                posts={state.profileData.posts}
-                               addPostCallback={props.store.addPost.bind(props.store)}
-                               updateNewPostText={props.store.updateNewPostText.bind(props.store)}
+                               dispatch={props.store.dispatch.bind(props.store)}
+                               // updateNewPostText={props.store.updateNewPostText.bind(props.store)}
                            />}/>
                     <Route exact path='/dialog'
                            render={() => <Dialogs
                                messageData={state.dialogsData.messages}
-                               dialogsData={state.dialogsData.dialogs}/>}
+                               dialogsData={state.dialogsData.dialogs}
+                               dispatch={props.store.dispatch.bind(props.store)}
+                           newMessageBody={state.dialogsData.newMessageBody}/>}
                     />
                     <Route exact path='/news' render={() => <News/>}/>
                     <Route exact path='/music' render={() => <Music/>}/>

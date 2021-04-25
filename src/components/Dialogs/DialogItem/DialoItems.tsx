@@ -14,5 +14,4 @@ const DialogItem = (props: DialogItemPropsType) => {
     </div>
 }
 
-
 export default DialogItem;

@@ -1,13 +1,11 @@
-
-
 export type StoryType = {
     _state: StateType
-    updateNewPostText: (newText: string) => void
-    // addPostCallback: (postText: string) => void
-    addPost: () => void
+    /*  updateNewPostText: (newText: string) => void
+      addPost: () => void*/
     _onChange: () => void
     subscribe: (observer: () => void) => void
     getState: () => StateType
+    dispatch: (action: ActionsTypes) => void
 }
 export type PostsType = {
     id: number
@@ -33,6 +31,8 @@ export type proFileDataType = {
 export type dialogsDataType = {
     dialogs: Array<DialogsType>
     messages: Array<MessageType>
+    newMessageBody: string
+
 }
 export type sidebarDataType = {
     friends: Array<sidebarType>
@@ -42,6 +42,40 @@ export type StateType = {
     dialogsData: dialogsDataType
     sidebarData: sidebarDataType
 }
+export type ActionsTypes =
+    ReturnType<typeof addPostAC>
+    | ReturnType<typeof changeNewTextAC>
+    | ReturnType<typeof sendMessageAC>
+    | ReturnType<typeof updateNewMessageBodyAC>
+
+export const addPostAC = (newPostText: string) => {
+    return {
+        type: 'ADD-POST',
+        newPostText: newPostText
+    } as const
+}
+export const changeNewTextAC = (newText: string) => {
+    return {
+        type: 'UPDATE-NEW-POST-TEXT',
+        newText: newText
+    } as const
+}
+export const sendMessageAC = (newSendMessage: string) => {
+    return {
+        type: 'SEND-MESSAGE',
+        newSendMessage: newSendMessage
+    } as const
+}
+export const updateNewMessageBodyAC = (newMessage: string) => {
+    return {
+        type: 'UPDATE-NEW-MESSAGE-BODY',
+        newMessage: newMessage
+    } as const
+}
+
+/*export const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY';
+export const SEND_MESSAGE = 'SEND-MESSAGE';*/
+
 
 const store: StoryType = {
     _state: {
@@ -60,43 +94,57 @@ const store: StoryType = {
             messages: [
                 {id: 1, message: 'Hi'},
                 {id: 2, message: 'How is your it-kamasutra'}
-            ]
+            ],
+            newMessageBody: ''
         },
         sidebarData: {
             friends: [
                 {id: 1, name: 'Dimych'},
                 {id: 2, name: 'Andrey'}
             ]
-        }
+        },
     },
-   /* addPostCallback (postText: string) {
-        this._state.profileData.newPostText = postText;
-        this._onChange();
-    },*/
-    updateNewPostText (newText: string) {
-        this._state.profileData.newPostText = newText;
-        this._onChange();
-    },
-    addPost ()  {  // postText: string
-        const newPost: PostsType = {
-            id: new Date().getTime(),
-            message: this._state.profileData.newPostText,
-            likesCount: 0
-        };
-        this._state.profileData.posts.push(newPost);
-        this._state.profileData.newPostText = '';
-        this._onChange();
-    },
-     _onChange ()  {
+    _onChange() {
         console.log('State has been changed')
     },
-    subscribe (observer)  {
+    subscribe(observer) {
         this._onChange = observer
     },
     getState() {
         return this._state
-    }
+    },
 
+
+    dispatch(action) {
+        if (action.type === 'ADD-POST') {
+            const newPost: PostsType = {
+                id: new Date().getTime(),
+                message: action.newPostText,
+                likesCount: 0
+            };
+            this._state.profileData.posts.push(newPost);
+            this._state.profileData.newPostText = '';
+            this._onChange();
+        } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
+            this._state.profileData.newPostText = action.newText;
+            this._onChange();
+        } else if (action.type === 'UPDATE-NEW-MESSAGE-BODY') {
+            this._state.dialogsData.newMessageBody = action.newMessage;
+            this._onChange();
+        } else if (action.type === 'SEND-MESSAGE') {
+                const sendMessage: MessageType = {
+                    id: new Date().getTime(),
+                    message: action.newSendMessage,
+                };
+                this._state.dialogsData.messages.push(sendMessage);
+                this._state.dialogsData.newMessageBody = '';
+                this._onChange();
+            /*let body = this._state.dialogsData.newMessageBody;
+            this._state.dialogsData.newMessageBody = '';
+            this._state.dialogsData.messages.push({id: 6, message: body});
+            this._onChange();*/
+        }
+    }
 }
 
 // window.state = state;
