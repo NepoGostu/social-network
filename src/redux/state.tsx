@@ -1,7 +1,9 @@
+import profileReducer, {addPostAC, changeNewTextAC} from './profile-reducer';
+import dialogsReducer, {sendMessageAC, updateNewMessageBodyAC} from './dialogs-reducer';
+import sidebarReducer from './sidebar-reducer';
+
 export type StoryType = {
     _state: StateType
-    /*  updateNewPostText: (newText: string) => void
-      addPost: () => void*/
     _onChange: () => void
     subscribe: (observer: () => void) => void
     getState: () => StateType
@@ -48,35 +50,6 @@ export type ActionsTypes =
     | ReturnType<typeof sendMessageAC>
     | ReturnType<typeof updateNewMessageBodyAC>
 
-export const addPostAC = (newPostText: string) => {
-    return {
-        type: 'ADD-POST',
-        newPostText: newPostText
-    } as const
-}
-export const changeNewTextAC = (newText: string) => {
-    return {
-        type: 'UPDATE-NEW-POST-TEXT',
-        newText: newText
-    } as const
-}
-export const sendMessageAC = (newSendMessage: string) => {
-    return {
-        type: 'SEND-MESSAGE',
-        newSendMessage: newSendMessage
-    } as const
-}
-export const updateNewMessageBodyAC = (newMessage: string) => {
-    return {
-        type: 'UPDATE-NEW-MESSAGE-BODY',
-        newMessage: newMessage
-    } as const
-}
-
-/*export const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY';
-export const SEND_MESSAGE = 'SEND-MESSAGE';*/
-
-
 const store: StoryType = {
     _state: {
         profileData: {
@@ -113,10 +86,14 @@ const store: StoryType = {
     getState() {
         return this._state
     },
-
-
     dispatch(action) {
-        if (action.type === 'ADD-POST') {
+
+        this._state.profileData = profileReducer(this._state.profileData, action);
+        this._state.dialogsData = dialogsReducer(this._state.dialogsData, action);
+        this._state.sidebarData = sidebarReducer(this._state.sidebarData, action);
+        this._onChange();
+
+        /*if (action.type === 'ADD-POST') {
             const newPost: PostsType = {
                 id: new Date().getTime(),
                 message: action.newPostText,
@@ -139,11 +116,7 @@ const store: StoryType = {
                 this._state.dialogsData.messages.push(sendMessage);
                 this._state.dialogsData.newMessageBody = '';
                 this._onChange();
-            /*let body = this._state.dialogsData.newMessageBody;
-            this._state.dialogsData.newMessageBody = '';
-            this._state.dialogsData.messages.push({id: 6, message: body});
-            this._onChange();*/
-        }
+        }*/
     }
 }
 
