@@ -92,31 +92,6 @@ const store: StoryType = {
         this._state.dialogsData = dialogsReducer(this._state.dialogsData, action);
         this._state.sidebarData = sidebarReducer(this._state.sidebarData, action);
         this._onChange();
-
-        /*if (action.type === 'ADD-POST') {
-            const newPost: PostsType = {
-                id: new Date().getTime(),
-                message: action.newPostText,
-                likesCount: 0
-            };
-            this._state.profileData.posts.push(newPost);
-            this._state.profileData.newPostText = '';
-            this._onChange();
-        } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
-            this._state.profileData.newPostText = action.newText;
-            this._onChange();
-        } else if (action.type === 'UPDATE-NEW-MESSAGE-BODY') {
-            this._state.dialogsData.newMessageBody = action.newMessage;
-            this._onChange();
-        } else if (action.type === 'SEND-MESSAGE') {
-                const sendMessage: MessageType = {
-                    id: new Date().getTime(),
-                    message: action.newSendMessage,
-                };
-                this._state.dialogsData.messages.push(sendMessage);
-                this._state.dialogsData.newMessageBody = '';
-                this._onChange();
-        }*/
     }
 }
 

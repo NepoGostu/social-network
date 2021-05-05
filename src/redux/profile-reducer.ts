@@ -1,9 +1,17 @@
-import {ActionsTypes, PostsType, proFileDataType} from './state';
+import {ActionsTypes, PostsType, proFileDataType} from './store';
 
-const ADD_POST = 'ADD-POST';
+export const ADD_POST = 'ADD-POST';
 export const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 
-const profileReducer = (state: proFileDataType, action: ActionsTypes): proFileDataType => {
+let initialState = {
+        posts: [
+            {id: 1, message: 'Hi,my name is Andrey', likesCount: 12},
+            {id: 2, message: 'Yo,kabzda kak easy', likesCount: 11},
+        ],
+        newPostText: ''
+    };
+
+const profileReducer = (state = initialState, action: ActionsTypes): proFileDataType => {
     switch (action.type) {
         case 'ADD-POST':
             const newPost: PostsType = {

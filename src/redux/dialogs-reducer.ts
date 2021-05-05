@@ -1,9 +1,21 @@
-import {ActionsTypes, dialogsDataType, MessageType, PostsType, StoryType} from './state';
+import {ActionsTypes, dialogsDataType, MessageType, PostsType, StoryType} from './store';
 
 const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY';
 export const SEND_MESSAGE = 'SEND-MESSAGE';
 
-const dialogsReducer = (state:dialogsDataType, action:ActionsTypes):dialogsDataType => {
+let initialState = {
+    dialogs: [
+        {id: 1, name: 'Dimych'},
+        {id: 2, name: 'Andrey'}
+    ],
+    messages: [
+        {id: 1, message: 'Hi'},
+        {id: 2, message: 'How is your it-kamasutra'}
+    ],
+    newMessageBody: ''
+}
+
+const dialogsReducer = (state = initialState, action:ActionsTypes):dialogsDataType => {
     switch (action.type) {
         case 'UPDATE-NEW-MESSAGE-BODY':
             state.newMessageBody = action.newMessage;
@@ -12,7 +24,7 @@ const dialogsReducer = (state:dialogsDataType, action:ActionsTypes):dialogsDataT
         case 'SEND-MESSAGE':
             const sendMessage: MessageType = {
                 id: new Date().getTime(),
-                message: action.newSendMessage,
+                message: state.newMessageBody,
             };
             state.messages.push(sendMessage);
             state.newMessageBody = '';
@@ -23,10 +35,9 @@ const dialogsReducer = (state:dialogsDataType, action:ActionsTypes):dialogsDataT
     }
 }
 
-export const sendMessageAC = (newSendMessage: string) => {
+export const sendMessageAC = () => {
     return {
-        type: 'SEND-MESSAGE',
-        newSendMessage: newSendMessage
+        type: 'SEND-MESSAGE'
     } as const
 }
 export const updateNewMessageBodyAC = (newMessage: string) => {
