@@ -1,9 +1,14 @@
-import {ActionsTypes, dialogsDataType, MessageType, PostsType, StoryType} from './store';
+import {ActionsTypes, MessageType} from './store';
+
+export type DialogsType = {
+    id: number
+    name: string
+}
 
 const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY';
-export const SEND_MESSAGE = 'SEND-MESSAGE';
+const SEND_MESSAGE = 'SEND-MESSAGE';
 
-let initialState = {
+let initialState: InitialStateType = {
     dialogs: [
         {id: 1, name: 'Dimych'},
         {id: 2, name: 'Andrey'}
@@ -15,21 +20,33 @@ let initialState = {
     newMessageBody: ''
 }
 
-const dialogsReducer = (state = initialState, action:ActionsTypes):dialogsDataType => {
+export type InitialStateType = {
+    dialogs: Array<DialogsType>
+    messages: Array<MessageType>
+    newMessageBody: string
+}
+
+const dialogsReducer = (state: InitialStateType = initialState, action: ActionsTypes): InitialStateType => {
     switch (action.type) {
-        case 'UPDATE-NEW-MESSAGE-BODY':
-            state.newMessageBody = action.newMessage;
-            // this._onChange();
-            return state;
-        case 'SEND-MESSAGE':
-            const sendMessage: MessageType = {
-                id: new Date().getTime(),
-                message: state.newMessageBody,
+        case UPDATE_NEW_MESSAGE_BODY:
+            return {
+                ...state,
+                newMessageBody: action.newMessage
             };
-            state.messages.push(sendMessage);
-            state.newMessageBody = '';
-            // this._onChange();
-            return state;
+            // stateCopy.newMessageBody = action.newMessage;
+        case SEND_MESSAGE:
+            let body = state.newMessageBody
+            return{
+                ...state,
+                newMessageBody: '',
+                messages: [...state.messages, {id: new Date().getTime(), message: body}]
+            }
+            /*  const sendMessage: MessageType = {
+                  // id: new Date().getTime(),
+                  message: stateCopy.newMessageBody,
+              };
+              stateCopy.messages.push(sendMessage);
+              // stateCopy.newMessageBody = '';*/
         default:
             return state;
     }
@@ -37,12 +54,12 @@ const dialogsReducer = (state = initialState, action:ActionsTypes):dialogsDataTy
 
 export const sendMessageAC = () => {
     return {
-        type: 'SEND-MESSAGE'
+        type: SEND_MESSAGE
     } as const
 }
 export const updateNewMessageBodyAC = (newMessage: string) => {
     return {
-        type: 'UPDATE-NEW-MESSAGE-BODY',
+        type: UPDATE_NEW_MESSAGE_BODY,
         newMessage: newMessage
     } as const
 }

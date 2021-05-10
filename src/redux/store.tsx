@@ -9,12 +9,12 @@ export type StoryType = {
     getState: () => StateType
     dispatch: (action: ActionsTypes) => void
 }
-export type PostsType = {
+type PostsType = {
     id: number
     message: string
     likesCount: number
 }
-export type DialogsType = {
+type DialogsType = {
     id: number
     name: string
 }
@@ -26,11 +26,11 @@ export type sidebarType = {
     id: number
     name: string
 }
-export type proFileDataType = {
+type proFileDataType = {
     posts: Array<PostsType>
     newPostText: string
 }
-export type dialogsDataType = {
+type dialogsDataType = {
     dialogs: Array<DialogsType>
     messages: Array<MessageType>
     newMessageBody: string
@@ -50,7 +50,7 @@ export type ActionsTypes =
     | ReturnType<typeof sendMessageAC>
     | ReturnType<typeof updateNewMessageBodyAC>
 
-const store: StoryType = {
+export const store: StoryType = {
     _state: {
         profileData: {
             posts: [
