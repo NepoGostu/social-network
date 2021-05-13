@@ -41,12 +41,6 @@ const dialogsReducer = (state: InitialStateType = initialState, action: ActionsT
                 newMessageBody: '',
                 messages: [...state.messages, {id: new Date().getTime(), message: body}]
             }
-            /*  const sendMessage: MessageType = {
-                  // id: new Date().getTime(),
-                  message: stateCopy.newMessageBody,
-              };
-              stateCopy.messages.push(sendMessage);
-              // stateCopy.newMessageBody = '';*/
         default:
             return state;
     }

@@ -1,6 +1,9 @@
 import profileReducer, {addPostAC, changeNewTextAC} from './profile-reducer';
 import dialogsReducer, {sendMessageAC, updateNewMessageBodyAC} from './dialogs-reducer';
 import sidebarReducer from './sidebar-reducer';
+import {followAC} from './users-reducer';
+import {unfollowAC} from './users-reducer';
+import {setUsersAC} from './users-reducer';
 
 export type StoryType = {
     _state: StateType
@@ -49,6 +52,9 @@ export type ActionsTypes =
     | ReturnType<typeof changeNewTextAC>
     | ReturnType<typeof sendMessageAC>
     | ReturnType<typeof updateNewMessageBodyAC>
+    | ReturnType<typeof followAC>
+    | ReturnType<typeof unfollowAC>
+    | ReturnType<typeof setUsersAC>
 
 export const store: StoryType = {
     _state: {
@@ -74,7 +80,7 @@ export const store: StoryType = {
             friends: [
                 {id: 1, name: 'Dimych'},
                 {id: 2, name: 'Andrey'}
-            ]
+            ],
         },
     },
     _onChange() {
