@@ -23,9 +23,12 @@ const App = () => {
     const menuItems: Array<MenuItemType> = [
         {id: 1, to: '/profile', title: 'Profile'},
         {id: 2, to: '/dialog', title: 'Messages'},
-        {id: 3, to: '/news', title: 'News'},
-        {id: 4, to: '/music', title: 'Music'},
-        {id: 5, to: '/settings', title: 'Settings'},
+        {id: 3, to: '/users', title: 'Users'},
+        {id: 4, to: '/news', title: 'News'},
+        {id: 5, to: '/music', title: 'Music'},
+        {id: 6, to: '/settings', title: 'Settings'},
+
+
     ]
 
 

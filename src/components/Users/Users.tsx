@@ -1,19 +1,20 @@
 import React from 'react';
 import styles from './Users.module.css';
 import {UsersPropsType} from './UsersContainer';
-import  axios from 'axios';
+import axios from 'axios';
 import userPhoto from '../../assest/image/78-786207_user-avatar-png-user-avatar-icon-png-transparent.jpg'
 
-let Users = (props:UsersPropsType) => {
-let getUsers = () => {
-    if (props.usersData.users.length === 0) {
-        axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
-            props.setUsers(response.data.items)
-        })
+let Users = (props: UsersPropsType) => {
+    let getUsers = () => {
+        if (props.usersData.users.length === 0) {
+            axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
+                props.setUsers(response.data.items)
+            })
+        }
     }
-}
     /*props.setUsers( [
         {
+
             id: 1,
             photoUrl: 'https://icon-library.net/images/male-avatar-icon/male-avatar-icon-13.jpg',
             followed: false,
@@ -38,7 +39,6 @@ let getUsers = () => {
             location: {city: 'Moscow', country: 'Russia'}
         }
     ])*/
-
 
 
     return <div>
