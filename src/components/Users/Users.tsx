@@ -12,34 +12,6 @@ let Users = (props: UsersPropsType) => {
             })
         }
     }
-    /*props.setUsers( [
-        {
-
-            id: 1,
-            photoUrl: 'https://icon-library.net/images/male-avatar-icon/male-avatar-icon-13.jpg',
-            followed: false,
-            fullName: 'Andrei',
-            status: 'Big Brother watching you',
-            location: {city: 'Moscow', country: 'Russia'}
-        },
-        {
-            id: 2,
-            photoUrl: 'https://img2.pngio.com/avatar-female-person-user-woman-young-icon-female-avatar-png-512_512.png',
-            followed: true,
-            fullName: 'Kristina',
-            status: 'Cool girl',
-            location: {city: 'Moscow', country: 'Russia'}
-        },
-        {
-            id: 3,
-            photoUrl: 'https://icon-library.net/images/male-avatar-icon/male-avatar-icon-12.jpg',
-            followed: false,
-            fullName: 'Antonio',
-            status: 'Muchachos',
-            location: {city: 'Moscow', country: 'Russia'}
-        }
-    ])*/
-
 
     return <div>
         <button onClick={getUsers}>Get users</button>

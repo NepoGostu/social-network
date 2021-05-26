@@ -6,17 +6,36 @@ import {UsersPropsType} from './UsersContainer';
 
 export class Users1 extends React.Component<UsersPropsType> {
 
-    constructor(props: UsersPropsType) {
-        super(props);
+    componentDidMount() {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.usersData.currentPage}&count=${this.props.usersData.pageSize}`).then(response => {
+            this.props.setUsers(response.data.items)
+            this.props.setTotalUsersCount(response.data.totalCount)
+        })
+    }
 
-        axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
+    onPageChanged = (pageNumber: number) => {
+        this.props.setCurrentPage(pageNumber);
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.usersData.pageSize}`).then(response => {
             this.props.setUsers(response.data.items)
         })
     }
 
-
     render() {
+        let pagesCount = this.props.usersData.totalUsersCount / this.props.usersData.pageSize;
+        let pages = [];
+        for (let i = 0; i < pagesCount; i++) {
+            pages.push(i);
+        }
+
         return <div>
+            <div>
+                {pages.map(p => {
+                    return <span className={this.props.usersData.currentPage === p ? styles.selectedPage : ''}
+                                 onClick={(e) => {
+                                     this.onPageChanged(p)
+                                 }}>{p}</span>
+                })}
+            </div>
             {
                 this.props.usersData.users.map(u => <div key={u.id}>
         <span>
