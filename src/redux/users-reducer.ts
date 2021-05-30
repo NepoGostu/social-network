@@ -5,14 +5,14 @@ let initialState: InitialStateTypeToUsers = {
     pageSize: 5,
     totalUsersCount: 54,
     currentPage: 1,
-    // totalCount: 54
+    isFetching: false// todo 57lsn preloader
 }
 export type InitialStateTypeToUsers = {
     users: UserType[],
     pageSize: number,
     totalUsersCount: number
     currentPage: number,
-    // totalCount: number
+    isFetching: boolean
 }
 export type UsersLocationType = {
     city: string
@@ -37,6 +37,7 @@ const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET-USERS';
 const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE';
 const SET_TOTAL_USERS_COUNT = 'SET-TOTAL-USERS-COUNT';
+const TOGGLE_IS_FETCHING = 'TOGGLE-IS-FETCHING';
 
 const usersReducer = (state: InitialStateTypeToUsers = initialState, action: ActionsTypes): InitialStateTypeToUsers => {
 
@@ -70,41 +71,52 @@ const usersReducer = (state: InitialStateTypeToUsers = initialState, action: Act
         case SET_TOTAL_USERS_COUNT: {
             return {...state, totalUsersCount: action.totalUsersCount}
         }
+        case TOGGLE_IS_FETCHING: {
+            return {...state, isFetching: action.isFetching}
+        }
+
         default:
             return state;
     }
 }
 
-export const followAC = (userId: number) => {
+export const follow = (userId: number) => {
     return {
         type: FOLLOW,
         userId
     } as const
 }
-export const unfollowAC = (userId: number) => {
+export const unfollow = (userId: number) => {
     return {
         type: UNFOLLOW,
         userId
     } as const
 }
-export const setUsersAC = (users: UserType[]) => {
+export const setUsers = (users: UserType[]) => {
     return {
         type: SET_USERS,
         users
     } as const
 }
-export const setCurrentPageAC = (currentPage: number) => {
+export const setCurrentPage = (currentPage: number) => {
     return {
         type: SET_CURRENT_PAGE,
         currentPage
     } as const
-}// todo какая то шляпа с типизацией 55lsn
-export const setTotalUsersCountAC = (totalUsersCount: number) => {
+}
+export const setTotalUsersCount = (totalUsersCount: number) => {
     return {
         type: SET_TOTAL_USERS_COUNT,
         totalUsersCount
     } as const
-}// todo type for totalCount
+}
+    export const toggleIsFetching = (isFetching: boolean) => {
+        return {
+            type: TOGGLE_IS_FETCHING,
+            isFetching
+        } as const
+    }
+
 
 export default usersReducer;
 

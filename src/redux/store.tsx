@@ -1,9 +1,14 @@
 import profileReducer, {addPostAC, changeNewTextAC} from './profile-reducer';
 import dialogsReducer, {sendMessageAC, updateNewMessageBodyAC} from './dialogs-reducer';
 import sidebarReducer from './sidebar-reducer';
-import {followAC, setCurrentPageAC, setTotalUsersCountAC} from './users-reducer';
-import {unfollowAC} from './users-reducer';
-import {setUsersAC} from './users-reducer';
+import {
+    follow,
+    setCurrentPage,
+    setTotalUsersCount,
+    toggleIsFetching
+} from './users-reducer';
+import {unfollow} from './users-reducer';
+import {setUsers} from './users-reducer';
 
 export type StoryType = {
     _state: StateType
@@ -52,12 +57,12 @@ export type ActionsTypes =
     | ReturnType<typeof changeNewTextAC>
     | ReturnType<typeof sendMessageAC>
     | ReturnType<typeof updateNewMessageBodyAC>
-    | ReturnType<typeof followAC>
-    | ReturnType<typeof unfollowAC>
-    | ReturnType<typeof setUsersAC>
-    | ReturnType<typeof setCurrentPageAC>
-    | ReturnType<typeof setTotalUsersCountAC>
-
+    | ReturnType<typeof follow>
+    | ReturnType<typeof unfollow>
+    | ReturnType<typeof setUsers>
+    | ReturnType<typeof setCurrentPage>
+    | ReturnType<typeof setTotalUsersCount>
+    | ReturnType<typeof toggleIsFetching>
 export const store: StoryType = {
     _state: {
         profileData: {

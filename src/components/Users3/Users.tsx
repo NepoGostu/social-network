@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from './Users.module.css';
-import {UsersPropsType} from './UsersContainer';
+import styles from '../Users/Users.module.css';
+import {UsersPropsType} from '../Users/UsersContainer';
 import axios from 'axios';
 import userPhoto from '../../assest/image/78-786207_user-avatar-png-user-avatar-icon-png-transparent.jpg'
 
