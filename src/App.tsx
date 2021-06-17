@@ -2,21 +2,19 @@ import React from 'react';
 import './App.css';
 import Header from './components/Header/Header';
 import Navbar from './components/Navbar/Navbar';
-import Profile from './components/Profile/Profile';
 import {BrowserRouter, Route} from 'react-router-dom';
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
 import UsersContainer from './components/Users/UsersContainer';
-
+import ProfileContainer from './components/Profile/ProfileContainer';
 
 export type MenuItemType = {
     to: string,
     title: string
     id: number
 }
-
 
 const App = () => {
 
@@ -38,7 +36,7 @@ const App = () => {
                 <Header/>
                 <Navbar menuItems={menuItems}/>
                 <div className='app-wrapper-content'>
-                    <Route exact path='/profile' render={() => <Profile/>}/>
+                    <Route exact path='/profile' render={() => <ProfileContainer/>}/>
                     <Route exact path='/dialog' render={() => <DialogsContainer/>}/>
                     <Route exact path='/news' render={() => <News/>}/>
                     <Route exact path='/music' render={() => <Music/>}/>
@@ -50,4 +48,5 @@ const App = () => {
 
     );
 }
+
 export default App;

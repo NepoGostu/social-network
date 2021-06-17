@@ -1,4 +1,4 @@
-import profileReducer, {addPostAC, changeNewTextAC} from './profile-reducer';
+import profileReducer, {addPostAC, changeNewTextAC, ProfileType, setUserProfile} from './profile-reducer';
 import dialogsReducer, {sendMessageAC, updateNewMessageBodyAC} from './dialogs-reducer';
 import sidebarReducer from './sidebar-reducer';
 import {
@@ -37,6 +37,7 @@ export type sidebarType = {
 type proFileDataType = {
     posts: Array<PostsType>
     newPostText: string
+    profile: null | ProfileType
 }
 type dialogsDataType = {
     dialogs: Array<DialogsType>
@@ -63,6 +64,7 @@ export type ActionsTypes =
     | ReturnType<typeof setCurrentPage>
     | ReturnType<typeof setTotalUsersCount>
     | ReturnType<typeof toggleIsFetching>
+    | ReturnType<typeof setUserProfile>
 export const store: StoryType = {
     _state: {
         profileData: {
@@ -70,7 +72,8 @@ export const store: StoryType = {
                 {id: 1, message: 'Hi,my name is Andrey', likesCount: 12},
                 {id: 2, message: 'Yo,kabzda kak easy', likesCount: 11},
             ],
-            newPostText: ''
+            newPostText: '',
+            profile: null
         },
         dialogsData: {
             dialogs: [

@@ -7,6 +7,7 @@ let initialState: InitialStateTypeToUsers = {
     currentPage: 1,
     isFetching: false// todo 57lsn preloader
 }
+
 export type InitialStateTypeToUsers = {
     users: UserType[],
     pageSize: number,
@@ -110,7 +111,7 @@ export const setTotalUsersCount = (totalUsersCount: number) => {
         totalUsersCount
     } as const
 }
-    export const toggleIsFetching = (isFetching: boolean) => {
+export const toggleIsFetching = (isFetching: boolean) => {
         return {
             type: TOGGLE_IS_FETCHING,
             isFetching
