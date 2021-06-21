@@ -9,6 +9,7 @@ import {
 } from './users-reducer';
 import {unfollow} from './users-reducer';
 import {setUsers} from './users-reducer';
+import {setAuthUserData} from './auth-reducer';
 
 export type StoryType = {
     _state: StateType
@@ -65,6 +66,8 @@ export type ActionsTypes =
     | ReturnType<typeof setTotalUsersCount>
     | ReturnType<typeof toggleIsFetching>
     | ReturnType<typeof setUserProfile>
+    | ReturnType<typeof setAuthUserData>
+
 export const store: StoryType = {
     _state: {
         profileData: {
