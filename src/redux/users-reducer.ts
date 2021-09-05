@@ -5,15 +5,20 @@ let initialState: InitialStateTypeToUsers = {
     pageSize: 5,
     totalUsersCount: 54,
     currentPage: 1,
-    isFetching: false// todo 57lsn preloader
+    isFetching: true,
+    followingInProgress: []
 }
+
+export type FollowingInProgressType = number | boolean
+
 
 export type InitialStateTypeToUsers = {
     users: UserType[],
     pageSize: number,
     totalUsersCount: number
     currentPage: number,
-    isFetching: boolean
+    isFetching: boolean,
+    followingInProgress: Array<FollowingInProgressType>,
 }
 export type UsersLocationType = {
     city: string
@@ -33,12 +38,15 @@ export type UserType = {
 
 }
 
+
+
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET-USERS';
 const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE';
 const SET_TOTAL_USERS_COUNT = 'SET-TOTAL-USERS-COUNT';
 const TOGGLE_IS_FETCHING = 'TOGGLE-IS-FETCHING';
+const TOGGLE_IS_FOLLOWING_IN_PROGRESS = 'TOGGLE-IS-FOLLOWING-IN-PROGRESS'
 
 const usersReducer = (state: InitialStateTypeToUsers = initialState, action: ActionsTypes): InitialStateTypeToUsers => {
 
@@ -74,6 +82,15 @@ const usersReducer = (state: InitialStateTypeToUsers = initialState, action: Act
         }
         case TOGGLE_IS_FETCHING: {
             return {...state, isFetching: action.isFetching}
+        }
+        case TOGGLE_IS_FOLLOWING_IN_PROGRESS:{
+            return {
+                ...state,
+                followingInProgress:action.isFetching
+                    ? [...state.followingInProgress, action.userId]
+                    : state.followingInProgress.filter(el => el != action.userId)
+            }
+
         }
 
         default:
@@ -112,11 +129,20 @@ export const setTotalUsersCount = (totalUsersCount: number) => {
     } as const
 }
 export const toggleIsFetching = (isFetching: boolean) => {
+    return {
+        type: TOGGLE_IS_FETCHING,
+        isFetching
+    } as const
+}
+    export const toggleFollowingInProgress = (isFetching: boolean, userId: number) => {
         return {
-            type: TOGGLE_IS_FETCHING,
-            isFetching
-        } as const
-    }
+            type: TOGGLE_IS_FOLLOWING_IN_PROGRESS,
+            isFetching,
+            userId,
+    } as const
+        }
+
+
 
 
 export default usersReducer;

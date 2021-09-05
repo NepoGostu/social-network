@@ -4,7 +4,7 @@ import sidebarReducer from './sidebar-reducer';
 import {
     follow,
     setCurrentPage,
-    setTotalUsersCount,
+    setTotalUsersCount, toggleFollowingInProgress,
     toggleIsFetching
 } from './users-reducer';
 import {unfollow} from './users-reducer';
@@ -67,6 +67,7 @@ export type ActionsTypes =
     | ReturnType<typeof toggleIsFetching>
     | ReturnType<typeof setUserProfile>
     | ReturnType<typeof setAuthUserData>
+    | ReturnType<typeof toggleFollowingInProgress>
 
 export const store: StoryType = {
     _state: {
