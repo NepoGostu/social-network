@@ -1,3 +1,5 @@
+export let a= 1
+/*
 import React from 'react';
 import styles from '../Users/Users.module.css';
 import {UsersPropsType} from '../Users/UsersContainer';
@@ -45,4 +47,4 @@ let Users = (props: UsersPropsType) => {
     </div>
 }
 
-export default Users;
+export default Users;*/
