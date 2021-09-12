@@ -1,5 +1,7 @@
 import {ActionsTypes,} from './store';
 import {UsersLocationType} from './users-reducer';
+import {usersAPI} from '../api/api';
+import {Dispatch} from 'redux';
 
 let initialState: InitialStateTypeToPosts = {
     posts: [
@@ -88,6 +90,11 @@ export const setUserProfile = (profile: ProfileType) => {
         type: SET_USERS_PROFILE,
         profile: profile
     } as const
+}
+export const getUserProfile = (userId: number) => (dispatch: Dispatch ) => {
+    usersAPI.getProfile(userId).then(response => {
+       dispatch(setUserProfile(response.data))
+    })
 }
 
 export default profileReducer;

@@ -28,12 +28,12 @@ export const usersAPI = {
     }
 }
 
-/*export const authAPI = {
+export const authAPI = {
     me() {
         return instance.get(`auth/me`
         )
     }
-}*/
+}
 
 
 /*export const getUsers = (currentPage = 1, pageSize = 10) => {

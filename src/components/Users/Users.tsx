@@ -3,7 +3,6 @@ import styles from './Users.module.css';
 import userPhoto from '../../assest/image/78-786207_user-avatar-png-user-avatar-icon-png-transparent.jpg';
 import {UsersPropsType} from './UsersContainer';
 import {NavLink} from 'react-router-dom';
-import {usersAPI} from '../../api/api';
 
 type  PropsType = {
     onPageChanged: (pageNumber: number) => void

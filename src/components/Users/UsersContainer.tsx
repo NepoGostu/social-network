@@ -32,13 +32,6 @@ export class UsersContainer extends React.Component<UsersPropsType> {
 
     onPageChanged = (pageNumber: number) => {
         this.props.getUsers(pageNumber, this.props.pageSize)
-        /* this.props.setCurrentPage(pageNumber);
-         this.props.toggleIsFetching(true)
-         usersAPI.getUsers(pageNumber, this.props.usersData.pageSize)
-             .then(response => {
-                 this.props.toggleIsFetching(false)
-                 this.props.setUsers(response.data.items)
-             })*/
     }
 
     render() {
@@ -47,14 +40,11 @@ export class UsersContainer extends React.Component<UsersPropsType> {
                 <Preloader/>
                 : null}
             <Users
-                // setTotalUsersCount={this.props.setTotalUsersCount}
                 onPageChanged={this.onPageChanged}
-                // setUsers={this.props.setUsers}
                 follow={this.props.follow}
                 unfollow={this.props.unfollow}
                 setCurrentPage={this.props.setCurrentPage}
                 usersData={this.props.usersData}
-                // toggleIsFetching={this.props.toggleIsFetching}
                 toggleFollowingInProgress={this.props.toggleFollowingInProgress}
                 followingInProgress={this.props.followingInProgress}
                 currentPage={this.props.currentPage}
