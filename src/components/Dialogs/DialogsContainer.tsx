@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 
 type MapStatePropsType = {
     dialogsData: InitialStateType
+    isAuth: boolean
 }
 type MapDispatchPropsType = {
     updateNewMessageBody: (body: string) => void
@@ -16,7 +17,8 @@ export type DialogPropsType = MapStatePropsType & MapDispatchPropsType
 
 let mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
-        dialogsData: state.dialogsData
+        dialogsData: state.dialogsData,
+        isAuth: state.auth.isAuth
     }
 }
 let mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {

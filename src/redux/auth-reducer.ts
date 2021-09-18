@@ -28,7 +28,7 @@ const authReducer = (state: InitialStateTypeAuth = initialState, action: Actions
                 ...state,
                 ...action.authData,
                 isAuth: true
-                }
+            }
         default:
             return state;
     }
@@ -44,7 +44,7 @@ export const getAuthUserData = () => (dispatch: Dispatch) => {
     authAPI.me().then(response => {
         if (response.data.resultCode === 0) {
             let {id: userID, email, login} = response.data.data
-           dispatch(setAuthUserData({userID, email, login, isAuth: true}))
+            dispatch(setAuthUserData({userID, email, login, isAuth: true}))
         }
     })
 }
