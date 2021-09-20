@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {ComponentType} from 'react';
 import Profile from './Profile';
 import {addPostAC, changeNewTextAC, getUserProfile, ProfileType} from '../../redux/profile-reducer';
 import {connect} from 'react-redux';
-import {RouteComponentProps} from 'react-router-dom';
+import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {AppStateType} from '../../redux/redux-store';
 import {withAuthRedirect} from '../../hoc/withAuthRedirect';
+import {compose} from 'redux';
 
 
 type MapStatePropsType = {
@@ -38,17 +39,28 @@ class ProfileContainer extends React.Component<ProfilePropsType> {
     }
 }
 
-let AuthRedirectComponent = withAuthRedirect(ProfileContainer);
 
 let mapStateToProps = (state: AppStateType): MapStatePropsType => ({
     profile: state.profileData.profile,
 })
+// let AuthRedirectComponent = withAuthRedirect(ProfileContainer);
 
-// let WithUrlDataContainerComponent = withRouter(AuthRedirectComponent)
+export  default  compose<ComponentType>(
+    connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps, {
+            addPostAC,
+            changeNewTextAC,
+            getUserProfile
+        }),
+    withRouter,
+    withAuthRedirect
+    )(ProfileContainer)
 
-export default withAuthRedirect(connect(mapStateToProps, {
-    addPostAC,
-    changeNewTextAC,
-    getUserProfile
-})
-(AuthRedirectComponent));
+
+// // let WithUrlDataContainerComponent = withRouter(AuthRedirectComponent)
+// /*
+// export default withAuthRedirect(connect(mapStateToProps, {
+//     addPostAC,
+//     changeNewTextAC,
+//     getUserProfile
+// })
+// (AuthRedirectComponent));*/

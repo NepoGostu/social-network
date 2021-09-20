@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component, ComponentType} from 'react';
 import {connect} from 'react-redux';
 import {
     follow,
@@ -13,6 +13,7 @@ import {AppStateType} from '../../redux/redux-store';
 import Users from './Users';
 import Preloader from '../common/preloader/Preloader';
 import {withAuthRedirect} from '../../hoc/withAuthRedirect';
+import {compose} from 'redux';
 
 type MapDispatchPropsType = {
     follow: (userId: number) => void
@@ -80,9 +81,19 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
     }
 }
 
-let withRedirect = withAuthRedirect(UsersContainer)
+/*let withRedirect = withAuthRedirect(UsersContainer)
 
 export default connect(mapStateToProps, {
     follow, unfollow, setCurrentPage, toggleFollowingInProgress, getUsers
-})(withRedirect);
+})(withRedirect);*/
 
+export default compose<ComponentType>(
+    connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps, {
+        follow,
+        unfollow,
+        setCurrentPage,
+        toggleFollowingInProgress,
+        getUsers
+    }),
+    withAuthRedirect
+)(UsersContainer)
