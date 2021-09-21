@@ -10,7 +10,10 @@ import {compose} from 'redux';
 
 type MapStatePropsType = {
     profile: ProfileType | null
-    // isAuth: boolean
+    // todo 71 lsn
+    // editMode: boolean,
+    // title: string,
+    // status: any
 }
 
 type MapDispatchPropsType = {
@@ -32,9 +35,17 @@ class ProfileContainer extends React.Component<ProfilePropsType> {
           })*!/
     }*/
     render() {
-        console.log('params', this.props.match)
+        // console.log('params', this.props.match)
         return (
-            <Profile {...this.props} profile={this.props.profile}/>
+            <Profile {...this.props}
+                     profile={this.props.profile}
+                // todo 71 lsn
+                //      title={this.props.title}
+                //      editMode={this.props.editMode}
+                //      status={this.props.status}
+
+
+            />
         )
     }
 }
@@ -42,15 +53,19 @@ class ProfileContainer extends React.Component<ProfilePropsType> {
 
 let mapStateToProps = (state: AppStateType): MapStatePropsType => ({
     profile: state.profileData.profile,
+    // todo 71 lsn
+    // title:state.profileData.title,
+    // editMode: state.profileData.editMode
+    // status: state.profileData.status
 })
 // let AuthRedirectComponent = withAuthRedirect(ProfileContainer);
 
-export  default  compose<ComponentType>(
+export default compose<ComponentType>(
     connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps, {
-            addPostAC,
-            changeNewTextAC,
-            getUserProfile
-        }),
+        addPostAC,
+        changeNewTextAC,
+        getUserProfile
+    }),
     withRouter,
     withAuthRedirect
     )(ProfileContainer)
