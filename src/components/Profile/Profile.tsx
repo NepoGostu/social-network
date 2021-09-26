@@ -5,21 +5,18 @@ import {ProfileType} from '../../redux/profile-reducer';
 
 export type ProfilePropsType = {
     profile: ProfileType | null
-    // todo 71 lsn
-    // editMode: boolean,
-    // title: string,
-    // status: any
+    status: string
+    updateStatus:  any // todo lsn 73 wtf typeof
 }
 
 const Profile = (props: ProfilePropsType) => {
     console.log("Profile")
     return (
         <div>
-            <ProfileInfo // todo 71 lsn
+            <ProfileInfo
                 profile = {props.profile}
-                // title={props.title}
-                // editMode={props.editMode}
-                // status={props.status}
+                status = {props.status}
+                updateStatus = {props.updateStatus}
             />
             <MyPostsContainer/>
         </div>

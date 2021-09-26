@@ -5,9 +5,6 @@ import {ProfilePropsType} from '../Profile';
 
 
 const ProfileInfo = (props: ProfilePropsType) => {
-//     if (!props.profile) {
-//         return <Preloader/>
-//     }
     console.log("test")
     return (
         <div>
@@ -16,6 +13,7 @@ const ProfileInfo = (props: ProfilePropsType) => {
                 <ProfileStatus
                     status={'hello my friends'}
                     profile={props.profile}
+                    updateStatus={props.updateStatus}
                 />
             </div>
         </div>

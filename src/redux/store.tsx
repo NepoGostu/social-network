@@ -1,14 +1,15 @@
-import profileReducer, {addPostAC, changeNewTextAC, ProfileType, setUserProfile} from './profile-reducer';
+import profileReducer, {addPostAC, changeNewTextAC, ProfileType, setStatus, setUserProfile} from './profile-reducer';
 import dialogsReducer, {sendMessageAC, updateNewMessageBodyAC} from './dialogs-reducer';
 import sidebarReducer from './sidebar-reducer';
 import {
-    follow, followSuccess,
+    followSuccess,
     setCurrentPage,
-    setTotalUsersCount, toggleFollowingInProgress,
-    toggleIsFetching, unfollowSuccess
+    setTotalUsersCount,
+    setUsers,
+    toggleFollowingInProgress,
+    toggleIsFetching,
+    unfollowSuccess
 } from './users-reducer';
-import {unfollow} from './users-reducer';
-import {setUsers} from './users-reducer';
 import {setAuthUserData} from './auth-reducer';
 
 export type StoryType = {
@@ -39,6 +40,8 @@ type proFileDataType = {
     posts: Array<PostsType>
     newPostText: string
     profile: null | ProfileType
+    status: string
+
 }
 type dialogsDataType = {
     dialogs: Array<DialogsType>
@@ -68,6 +71,7 @@ export type ActionsTypes =
     | ReturnType<typeof setUserProfile>
     | ReturnType<typeof setAuthUserData>
     | ReturnType<typeof toggleFollowingInProgress>
+    | ReturnType<typeof setStatus>
 
 export const store: StoryType = {
     _state: {
@@ -77,7 +81,8 @@ export const store: StoryType = {
                 {id: 2, message: 'Yo,kabzda kak easy', likesCount: 11},
             ],
             newPostText: '',
-            profile: null
+            profile: null,
+            status: ''
         },
         dialogsData: {
             dialogs: [

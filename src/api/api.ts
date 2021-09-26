@@ -28,6 +28,17 @@ export const usersAPI = {
     }
 }
 
+export const profileAPI = {
+    getProfile(userId: number) {
+        return instance.get('profile' + userId)
+    },
+    getStatus(userId: number) {
+        return instance.get('status' + userId)
+    },
+    updateStatus (status:string) {/////////////////////////////////// todo hz what a typeof
+        return instance.put('status', {status: status})
+    }
+}
 export const authAPI = {
     me() {
         return instance.get(`auth/me`
