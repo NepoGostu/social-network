@@ -4,7 +4,6 @@ import {profileAPI, usersAPI} from '../api/api';
 import {Dispatch} from 'redux';
 
 export type ProfileType = {
-
     id: number
     followed: boolean
     name: string
@@ -47,10 +46,10 @@ const SET_STATUS = 'SET-STATUS'
 
 const profileReducer = (state: InitialStateTypeToPosts = initialState, action: ActionsTypes): InitialStateTypeToPosts => {
     switch (action.type) {
-        case 'SET-STATUS': {
-            return {...
-                state,
-                    newPostText: action.status
+        case SET_STATUS: {
+            return {
+                ...state,
+                status: action.status
             }
         }
 
@@ -115,18 +114,20 @@ export const getStatus = (userId: number) => (dispatch: Dispatch ) => {
 }
 
 export const updateStatus = (status: string) => (dispatch: Dispatch ) => {
-    profileAPI.updateStatus(status).then(response => {
-        if(response.data.resultCode === 0) {
+    profileAPI.updateStatus(status)
+        .then(response => {
+            if(response.data.resultCode === 0) {
             dispatch(setStatus(status))
         }
 
     })
 }
 
-export const getUserProfile = (userId: number) => (dispatch: Dispatch ) => {
-    usersAPI.getProfile(userId).then(response => {
-       dispatch(setUserProfile(response.data))
-    })
+export const getUserProfile = (userId: number) => (dispatch: Dispatch) => {
+    profileAPI.getProfile(userId)
+        .then(response => {
+            dispatch(setUserProfile(response.data))
+        })
 }
 
 export default profileReducer;

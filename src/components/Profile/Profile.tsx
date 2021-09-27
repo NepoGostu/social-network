@@ -6,11 +6,10 @@ import {ProfileType} from '../../redux/profile-reducer';
 export type ProfilePropsType = {
     profile: ProfileType | null
     status: string
-    updateStatus:  any // todo lsn 73 wtf typeof
+    updateStatus: (status: string) => void
 }
 
 const Profile = (props: ProfilePropsType) => {
-    console.log("Profile")
     return (
         <div>
             <ProfileInfo
