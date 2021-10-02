@@ -1,6 +1,16 @@
 import React, {ChangeEvent} from 'react';
 import {ProfilePropsType} from '../Profile';
 
+
+type PropType = {
+    status: string
+}
+
+type StateProps = {
+    editMode: boolean,
+    status: string
+}
+
 export interface ProfileStatusPropsType extends ProfilePropsType {
     status: string
 }
@@ -27,6 +37,12 @@ class ProfileStatus extends React.Component<ProfileStatusPropsType> {
         this.setState({
             status: e.currentTarget.value
         })
+    }
+    componentDidUpdate(prevProps: PropType, prevState: StateProps) {
+        if(prevProps.status !== this.props.status) {
+            this.setState({status: this.props.status})
+        }
+
     }
 
     render() {
