@@ -1,5 +1,7 @@
 import {ActionsTypes, MessageType} from './store';
 
+
+
 export type DialogsType = {
     id: number
     name: string
@@ -17,7 +19,7 @@ let initialState: InitialStateType = {
         {id: 1, message: 'Hi'},
         {id: 2, message: 'How is your it-kamasutra'}
     ],
-    newMessageBody: ''
+    newMessageBody: '', // todo lsn 76 wtf typeof
 }
 
 export type InitialStateType = {
@@ -28,17 +30,16 @@ export type InitialStateType = {
 
 const dialogsReducer = (state: InitialStateType = initialState, action: ActionsTypes): InitialStateType => {
     switch (action.type) {
-        case UPDATE_NEW_MESSAGE_BODY:
+      /*  case UPDATE_NEW_MESSAGE_BODY:
             return {
                 ...state,
                 newMessageBody: action.newMessage
-            };
-            // stateCopy.newMessageBody = action.newMessage;
+            };*/
         case SEND_MESSAGE:
             let body = state.newMessageBody
             return{
                 ...state,
-                newMessageBody: '',
+                // newMessageBody: '',
                 messages: [...state.messages, {id: new Date().getTime(), message: body}]
             }
         default:
@@ -46,9 +47,10 @@ const dialogsReducer = (state: InitialStateType = initialState, action: ActionsT
     }
 }
 
-export const sendMessageAC = () => {
+export const sendMessageAC = (newMessageBody: string) => {
     return {
-        type: SEND_MESSAGE
+        type: SEND_MESSAGE,
+        newMessageBody
     } as const
 }
 export const updateNewMessageBodyAC = (newMessage: string) => {

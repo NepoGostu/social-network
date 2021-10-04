@@ -40,7 +40,7 @@ let initialState: InitialStateTypeToPosts = {
 };
 
 const ADD_POST = 'ADD-POST';
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
+// const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const SET_USERS_PROFILE = 'SET-USERS-PROFILE';
 const SET_STATUS = 'SET-STATUS'
 
@@ -56,7 +56,7 @@ const profileReducer = (state: InitialStateTypeToPosts = initialState, action: A
         case ADD_POST: {
             const newPost: PostsType = {
                 id: new Date().getTime(),
-                message: state.newPostText,
+                message: action.newPostText,
                 likesCount: 0
             };
             return {
@@ -65,12 +65,12 @@ const profileReducer = (state: InitialStateTypeToPosts = initialState, action: A
                 newPostText: ''
             }
         }
-        case UPDATE_NEW_POST_TEXT: {
+        /*case UPDATE_NEW_POST_TEXT: {
             return {
                 ...state,
                 newPostText: action.newText
             };
-        }
+        }*/
         case SET_USERS_PROFILE: {
             return {
                 ...state,
@@ -83,17 +83,18 @@ const profileReducer = (state: InitialStateTypeToPosts = initialState, action: A
 }
 
 
-export const addPostAC = () => {
+export const addPostAC = (newPostText: any) => { // todo lsn 76 typeof
     return {
         type: ADD_POST,
+        newPostText
     } as const
 }
-export const changeNewTextAC = (newText: string) => {
+/*export const changeNewTextAC = (newText: string) => {
     return {
         type: UPDATE_NEW_POST_TEXT,
         newText: newText
     } as const
-}
+}*/
 export const setUserProfile = (profile: ProfileType) => {
     return {
         type: SET_USERS_PROFILE,

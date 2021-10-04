@@ -2,7 +2,6 @@ import React, {ComponentType} from 'react';
 import Profile from './Profile';
 import {
     addPostAC,
-    changeNewTextAC,
     getStatus,
     getUserProfile,
     ProfileType,
@@ -21,8 +20,7 @@ type MapStatePropsType = {
 }
 
 type MapDispatchPropsType = {
-    addPostAC: () => void,
-    changeNewTextAC: (newText: string) => void,
+    addPostAC: any,
     getUserProfile: (userId: number) => void,
     getStatus: (userId: number) => void,
     updateStatus: (status: string) => void
@@ -64,7 +62,6 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => ({
 export default compose<ComponentType>(
     connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps, {
         addPostAC,
-        changeNewTextAC,
         getUserProfile,
         getStatus,
         updateStatus

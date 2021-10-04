@@ -1,5 +1,4 @@
-import {addPostAC, changeNewTextAC, PostsType} from '../../../redux/profile-reducer';
-import {updateNewMessageBodyAC} from '../../../redux/dialogs-reducer';
+import {addPostAC, PostsType} from '../../../redux/profile-reducer';
 import MyPosts from './MyPosts';
 import {connect} from 'react-redux';
 import {AppStateType} from '../../../redux/redux-store';
@@ -10,8 +9,8 @@ type MapStatePropsType = {
     newPostText: string
 }
 type MapDispatchPropsType = {
-    updateNewPostText: (text: string) => void
-    addPost: () => void
+    // updateNewPostText: (text: string) => void
+    addPost: any
 }
 
 export type MyPostPropsType = MapStatePropsType & MapDispatchPropsType
@@ -24,13 +23,12 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
 }
 const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
     return {
-        updateNewPostText: (text: string) => {
+        /*updateNewPostText: (text: string) => {
             let action = changeNewTextAC(text);
             dispatch(action);
-        },
-        addPost: () => {
-
-            dispatch(addPostAC())
+        },*/
+        addPost: (newPostText: any) => { // todo lsn 76 typeof
+            dispatch(addPostAC(newPostText))
         }
     }
 }

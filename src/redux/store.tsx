@@ -1,4 +1,4 @@
-import profileReducer, {addPostAC, changeNewTextAC, ProfileType, setStatus, setUserProfile} from './profile-reducer';
+import profileReducer, {addPostAC, ProfileType, setStatus, setUserProfile} from './profile-reducer';
 import dialogsReducer, {sendMessageAC, updateNewMessageBodyAC} from './dialogs-reducer';
 import sidebarReducer from './sidebar-reducer';
 import {
@@ -59,7 +59,6 @@ export type StateType = {
 }
 export type ActionsTypes =
     ReturnType<typeof addPostAC>
-    | ReturnType<typeof changeNewTextAC>
     | ReturnType<typeof sendMessageAC>
     | ReturnType<typeof updateNewMessageBodyAC>
     | ReturnType<typeof followSuccess>

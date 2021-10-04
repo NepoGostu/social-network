@@ -1,11 +1,9 @@
 import {compose, Dispatch} from 'redux';
-import {InitialStateType, sendMessageAC, updateNewMessageBodyAC} from '../../redux/dialogs-reducer';
+import {InitialStateType, sendMessageAC} from '../../redux/dialogs-reducer';
 import {AppStateType} from '../../redux/redux-store';
 import Dialogs from './Dialogs';
 import {connect} from 'react-redux';
-import {Redirect} from 'react-router-dom';
-import React, {Component, ComponentType} from 'react';
-import {ProfilePropsType} from '../Profile/ProfileContainer';
+import React, {ComponentType} from 'react';
 import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 
 type MapStatePropsType = {
@@ -13,8 +11,8 @@ type MapStatePropsType = {
     isAuth: boolean
 }
 type MapDispatchPropsType = {
-    updateNewMessageBody: (body: string) => void
-    sendMessage: () => void
+    // updateNewMessageBody: (body: string) => void
+    sendMessage: (newMessageBody: string) => void
 }
 
 export type DialogPropsType = MapStatePropsType & MapDispatchPropsType
@@ -27,13 +25,11 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
 }
 let mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
     return {
-        updateNewMessageBody: (body: string) => {
+       /* updateNewMessageBody: (body: string) => {
             dispatch(updateNewMessageBodyAC(body))
-        },
-        sendMessage: () => {
-            dispatch(sendMessageAC(
-
-            ))
+        },*/
+        sendMessage: (newMessageBody: string) => {
+            dispatch(sendMessageAC(newMessageBody))
         }
     }
 }
@@ -44,17 +40,4 @@ export default compose<ComponentType>(
         mapDispatchToProps
     ))
 (Dialogs)
-///////////////////////////////это аналогия
-/*let AuthRedirectComponent = withAuthRedirect(Dialogs)
-
-/!*let AuthRedirectComponent = (props: DialogPropsType) => {
-    if (!props.isAuth) {
-        return <Redirect to={'/login'}/>
-        return <Dialogs {...props}/>
-    }
-}*!/
-
-const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(AuthRedirectComponent);
-
-export default DialogsContainer;*/
 
