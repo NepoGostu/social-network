@@ -1,10 +1,10 @@
-import React, {ChangeEvent} from 'react';
+import React from 'react';
 import s from './Dialogs.module.css'
 import DialogItem from './DialogItem/DialoItems';
 import Message from './Message/Message';
 import {DialogPropsType} from './DialogsContainer';
 import {Redirect} from 'react-router-dom';
-import {Field, reduxForm} from 'redux-form';
+import {AddMessageForm} from './Message/AddMessageForm';
 
 
 const Dialogs = (props: DialogPropsType) => {
@@ -20,24 +20,12 @@ const Dialogs = (props: DialogPropsType) => {
      }*/
     let newMessageBody = state.newMessageBody
     let addNewMessage = (values: any) => {  // todo lsn 76 typeof
-        props.sendMessage(values.newMessageBody)
+        props.sendMessage(newMessageBody)
     }
     if (!props.isAuth) {
         return <Redirect to={'/login'}/>
     }
 
-    const AddMessageForm = (props: any) => {
-        return <form onSubmit={props.handleSubmit}>
-            <div>
-                <Field component="textarea" name="newMessageBody" placeholder="Enter your message"/>
-            </div>
-            <div>
-                <button>Send</button>
-            </div>
-        </form>
-    }
-
-    const AddMessageFormRedux = reduxForm({form: 'dialogAddMessageForm'})(AddMessageForm)
 
     return (
         <div className={s.dialogs}>
@@ -46,7 +34,7 @@ const Dialogs = (props: DialogPropsType) => {
             </div>
             <div className={s.messages}>
                 <div> {messageElements}</div>
-                <AddMessageFormRedux onSubmit={addNewMessage}/>
+                <AddMessageForm onSubmit={addNewMessage}/>
             </div>
         </div>
     )
