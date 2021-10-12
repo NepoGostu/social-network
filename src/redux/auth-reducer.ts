@@ -1,6 +1,8 @@
 import {ActionsTypes,} from './store';
 import {authAPI} from '../api/api';
 import {Dispatch} from 'redux';
+import {ThunkAction} from "redux-thunk"
+import {AppStateType} from './redux-store';
 
 let initialState: InitialStateTypeAuth = {
     userID: null,
@@ -10,9 +12,9 @@ let initialState: InitialStateTypeAuth = {
 }
 
 export type InitialStateTypeAuth = {
-    userID: null
-    email: null
-    login: null
+    userID: null | string
+    email: null | string
+    login: null | string
     isAuth: boolean
 }
 
@@ -27,7 +29,6 @@ const authReducer = (state: InitialStateTypeAuth = initialState, action: Actions
             return {
                 ...state,
                 ...action.authData,
-                isAuth: true
             }
         default:
             return state;
@@ -40,11 +41,29 @@ export const setAuthUserData = (authData: InitialStateTypeAuth) => {
         authData
     } as const
 }
-export const getAuthUserData = () => (dispatch: Dispatch) => {
+export const getAuthUserData = (): ThunkType => (dispatch) => {
     authAPI.me().then(response => {
         if (response.data.resultCode === 0) {
             let {id: userID, email, login} = response.data.data
             dispatch(setAuthUserData({userID, email, login, isAuth: true}))
+        }
+    })
+}
+
+export type ThunkType = ThunkAction<void, AppStateType, unknown, ActionsTypes>
+
+export const login = (email: string, password: string, rememberMe = false): ThunkType => (dispatch) => {
+    authAPI.login(email, password, rememberMe).then(response => {
+        if (response.data.resultCode === 0) {
+           dispatch(getAuthUserData())
+        }
+    })
+}
+
+export const logout = (): ThunkType => (dispatch) => {
+    authAPI.logout().then(response => {
+        if (response.data.resultCode === 0) {
+            dispatch(setAuthUserData({userID: null, email: null, login: null, isAuth: false}))
         }
     })
 }
