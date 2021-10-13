@@ -11,7 +11,6 @@ type MapStatePropsType = {
     isAuth: boolean
 }
 type MapDispatchPropsType = {
-    // updateNewMessageBody: (body: string) => void
     sendMessage: (newMessageBody: string) => void
 }
 
@@ -25,19 +24,14 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
 }
 let mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
     return {
-       /* updateNewMessageBody: (body: string) => {
-            dispatch(updateNewMessageBodyAC(body))
-        },*/
         sendMessage: (newMessageBody: string) => {
             dispatch(sendMessageAC(newMessageBody))
         }
     }
 }
 
-export default compose<ComponentType>(
-    withAuthRedirect,
-    connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps,
-        mapDispatchToProps
-    ))
-(Dialogs)
 
+export default compose<ComponentType>(
+    connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps, mapDispatchToProps),
+    withAuthRedirect
+)(Dialogs)

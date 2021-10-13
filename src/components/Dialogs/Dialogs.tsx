@@ -3,29 +3,21 @@ import s from './Dialogs.module.css'
 import DialogItem from './DialogItem/DialoItems';
 import Message from './Message/Message';
 import {DialogPropsType} from './DialogsContainer';
-import {Redirect} from 'react-router-dom';
-import {AddMessageForm} from './Message/AddMessageForm';
+import {AddMessageFormRedux} from './Message/AddMessageForm';
 
 
 const Dialogs = (props: DialogPropsType) => {
     let state = props.dialogsData;
     let dialogElements = state.dialogs.map(d => <DialogItem name={d.name} key={d.id} id={d.id}/>)
     let messageElements = state.messages.map(m => <Message message={m.message} key={m.id} id={m.id}/>)
-    /*  let onSendMessageClick = () => {
-          props.sendMessage();
-      }*/
-    /* let onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-         let body = e.currentTarget.value;
-         props.updateNewMessageBody(body);
-     }*/
     let newMessageBody = state.newMessageBody
     let addNewMessage = (values: any) => {  // todo lsn 76 typeof
         props.sendMessage(newMessageBody)
     }
-    if (!props.isAuth) {
-        return <Redirect to={'/login'}/>
-    }
-
+    // todo lsn 78 didnt work not yet
+    /* if (!props.isAuth) {
+         return <Redirect to={'/login'}/>
+     }*/
 
     return (
         <div className={s.dialogs}>
@@ -34,7 +26,7 @@ const Dialogs = (props: DialogPropsType) => {
             </div>
             <div className={s.messages}>
                 <div> {messageElements}</div>
-                <AddMessageForm onSubmit={addNewMessage}/>
+                <AddMessageFormRedux onSubmit={addNewMessage}/>
             </div>
         </div>
     )

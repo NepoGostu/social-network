@@ -19,7 +19,7 @@ let initialState: InitialStateType = {
         {id: 1, message: 'Hi'},
         {id: 2, message: 'How is your it-kamasutra'}
     ],
-    newMessageBody: '', // todo lsn 76 wtf typeof
+    newMessageBody: '',
 }
 
 export type InitialStateType = {

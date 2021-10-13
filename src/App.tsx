@@ -18,7 +18,6 @@ export type MenuItemType = {
 }
 
 const App = () => {
-
     const menuItems: Array<MenuItemType> = [
         {id: 1, to: '/profile', title: 'Profile'},
         {id: 2, to: '/dialog', title: 'Messages'},
@@ -26,24 +25,21 @@ const App = () => {
         {id: 4, to: '/news', title: 'News'},
         {id: 5, to: '/music', title: 'Music'},
         {id: 6, to: '/settings', title: 'Settings'},
-
-
     ]
-
 
     return (
         <BrowserRouter>
             <div className="app-wrapper">
                 <HeaderContainer/>
                 <Navbar menuItems={menuItems}/>
-                <div className='app-wrapper-content'>
-                    <Route exact path='/profile/:id?' render={() => <ProfileContainer   /> }/>
-                    <Route exact path='/dialog' render={() => <DialogsContainer/>}/>
-                    <Route exact path='/news' render={() => <News/>}/>
-                    <Route exact path='/music' render={() => <Music/>}/>
-                    <Route exact path='/settings' render={() => <Settings/>}/>
-                    <Route exact path='/users' render={() => <UsersContainer/>}/>
-                    <Route exact path='/login' render={() => <Login/>}/>
+                <div className="app-wrapper-content">
+                    <Route exact path="/profile/:id?" render={() => <ProfileContainer/>}/>
+                    <Route exact path="/dialog" render={() => <DialogsContainer/>}/>
+                    <Route exact path="/news" render={() => <News/>}/>
+                    <Route exact path="/music" render={() => <Music/>}/>
+                    <Route exact path="/settings" render={() => <Settings/>}/>
+                    <Route exact path="/users" render={() => <UsersContainer/>}/>
+                    <Route exact path="/login" render={() => <Login/>}/>
                 </div>
             </div>
         </BrowserRouter>

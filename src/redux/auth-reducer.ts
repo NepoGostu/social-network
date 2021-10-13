@@ -53,6 +53,7 @@ export const getAuthUserData = (): ThunkType => (dispatch) => {
 export type ThunkType = ThunkAction<void, AppStateType, unknown, ActionsTypes>
 
 export const login = (email: string, password: string, rememberMe = false): ThunkType => (dispatch) => {
+    console.log({email})
     authAPI.login(email, password, rememberMe).then(response => {
         if (response.data.resultCode === 0) {
            dispatch(getAuthUserData())

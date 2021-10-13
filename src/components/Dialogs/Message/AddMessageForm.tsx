@@ -6,7 +6,7 @@ import {maxLengthCreator, required} from '../../../utils/validators/validators';
 
 const maxLength50 = maxLengthCreator(50)
 
-export const AddMessageForm = (props: any) => {
+export const AddMessageForm = (props: any) => {// TODO typeof wtf
     return <form onSubmit={props.handleSubmit}>
         <div>
             <Field component={TextArea}
