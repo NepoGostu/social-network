@@ -16,15 +16,15 @@ import {initializeApp} from './redux/app-reducer';
 import Preloader from './components/common/Preloader/Preloader';
 import {AppStateType} from './redux/redux-store';
 
-type MSTPType = {
+type MapStateToPropsType = {
     initialized: boolean
 }
 
-type MDTPType = {
+type MapDispatchToPropsType = {
     initializeApp: () => void
 }
 
-type AllType = MSTPType & MDTPType
+type AllType = MapStateToPropsType & MapDispatchToPropsType
 
 export type MenuItemType = {
     to: string,
