@@ -1,8 +1,8 @@
 import {ActionsTypes,} from './store';
 import {authAPI} from '../api/api';
-import {Dispatch} from 'redux';
-import {ThunkAction} from "redux-thunk"
+import {ThunkAction} from 'redux-thunk'
 import {AppStateType} from './redux-store';
+import {stopSubmit} from 'redux-form';
 
 let initialState: InitialStateTypeAuth = {
     userID: null,
@@ -53,10 +53,12 @@ export const getAuthUserData = (): ThunkType => (dispatch) => {
 export type ThunkType = ThunkAction<void, AppStateType, unknown, ActionsTypes>
 
 export const login = (email: string, password: string, rememberMe = false): ThunkType => (dispatch) => {
-    console.log({email})
-    authAPI.login(email, password, rememberMe).then(response => {
+        authAPI.login(email, password, rememberMe).then(response => {
         if (response.data.resultCode === 0) {
            dispatch(getAuthUserData())
+        } else {
+            let message = response.data.messages.length > 0 ? response.data.messages[0] : 'Some wrong'
+            dispatch(stopSubmit('login', {_error: message}))
         }
     })
 }

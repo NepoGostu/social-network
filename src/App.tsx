@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {ComponentType} from 'react';
 import './App.css';
 import Navbar from './components/Navbar/Navbar';
-import {BrowserRouter, Route} from 'react-router-dom';
+import {Route, withRouter} from 'react-router-dom';
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
@@ -10,6 +10,21 @@ import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
 import Login from './components/Login/Login';
+import {connect} from 'react-redux';
+import {compose} from 'redux';
+import {initializeApp} from './redux/app-reducer';
+import Preloader from './components/common/Preloader/Preloader';
+import {AppStateType} from './redux/redux-store';
+
+type MSTPType = {
+    initialized: boolean
+}
+
+type MDTPType = {
+    initializeApp: () => void
+}
+
+type AllType = MSTPType & MDTPType
 
 export type MenuItemType = {
     to: string,
@@ -17,18 +32,26 @@ export type MenuItemType = {
     id: number
 }
 
-const App = () => {
-    const menuItems: Array<MenuItemType> = [
-        {id: 1, to: '/profile', title: 'Profile'},
-        {id: 2, to: '/dialog', title: 'Messages'},
-        {id: 3, to: '/users', title: 'Users'},
-        {id: 4, to: '/news', title: 'News'},
-        {id: 5, to: '/music', title: 'Music'},
-        {id: 6, to: '/settings', title: 'Settings'},
-    ]
+class App extends React.Component<AllType> {
 
-    return (
-        <BrowserRouter>
+    componentDidMount() {
+        this.props.initializeApp()
+    }
+
+    render() {
+        if (!this.props.initialized) {
+            return <Preloader/>
+        }
+        const menuItems: Array<MenuItemType> = [
+            {id: 1, to: '/profile', title: 'Profile'},
+            {id: 2, to: '/dialog', title: 'Messages'},
+            {id: 3, to: '/users', title: 'Users'},
+            {id: 4, to: '/news', title: 'News'},
+            {id: 5, to: '/music', title: 'Music'},
+            {id: 6, to: '/settings', title: 'Settings'},
+        ]
+
+        return (
             <div className="app-wrapper">
                 <HeaderContainer/>
                 <Navbar menuItems={menuItems}/>
@@ -42,9 +65,16 @@ const App = () => {
                     <Route exact path="/login" render={() => <Login/>}/>
                 </div>
             </div>
-        </BrowserRouter>
-
-    );
+        );
+    }
 }
 
-export default App;
+const mapStateToProps = (state: AppStateType): any => {
+    return {
+        initialized: state.app.initialized
+    }
+}
+
+export default compose<ComponentType>(
+    connect(mapStateToProps, {initializeApp}),
+    withRouter)(App);

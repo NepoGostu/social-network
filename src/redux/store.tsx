@@ -11,6 +11,7 @@ import {
     unfollowSuccess
 } from './users-reducer';
 import {setAuthUserData} from './auth-reducer';
+import {setInitializedSuccess} from './app-reducer';
 
 export type StoryType = {
     _state: StateType
@@ -71,6 +72,7 @@ export type ActionsTypes =
     | ReturnType<typeof setAuthUserData>
     | ReturnType<typeof toggleFollowingInProgress>
     | ReturnType<typeof setStatus>
+| ReturnType<typeof setInitializedSuccess>
 
 export const store: StoryType = {
     _state: {

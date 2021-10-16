@@ -95,5 +95,5 @@ export default compose<ComponentType>(
         toggleFollowingInProgress,
         getUsers
     }),
-    withAuthRedirect
+    // withAuthRedirect
 )(UsersContainer)

@@ -7,3 +7,9 @@
 {
     border: solid red 1px;
 }
+
+.form-summary-error {
+    border: red 1px solid;
+    padding: 5px;
+    color: crimson;
+}
