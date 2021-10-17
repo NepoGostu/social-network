@@ -40,7 +40,6 @@ class ProfileContainer extends React.Component<ProfilePropsType> {
                 this.props.history.push ('/login')
             }
         }
-
         this.props.getUserProfile(userId);
         this.props.getStatus(userId);
     }
@@ -63,7 +62,6 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => ({
         status: state.profileData.status,
         authorizedUserId: state.auth.userID,
         isAuth: state.auth.isAuth
-
     })
 ;
 
