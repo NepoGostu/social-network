@@ -20,7 +20,8 @@ export type InitialStateTypeToUsers = {
     currentPage: number,
     isFetching: boolean,
     followingInProgress: Array<FollowingInProgressType>,
-    getUsers: getUsersType[]
+    getUsers: getUsersType[],
+
 }
 export type UsersLocationType = {
     city: string

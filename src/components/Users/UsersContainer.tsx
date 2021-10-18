@@ -7,7 +7,7 @@ import {
     InitialStateTypeToUsers,
     setCurrentPage,
     toggleFollowingInProgress,
-    unfollow
+    unfollow, UserType, getUsersType
 } from '../../redux/users-reducer';
 import {AppStateType} from '../../redux/redux-store';
 import Users from './Users';
@@ -19,7 +19,7 @@ import {
     getIsFetching,
     getPageSize,
     getTotalUsersCount,
-    getUsersData
+    getUsersSuperSelector, countSomethingDifficult
 } from '../../redux/users-selectors';
 
 type MapDispatchPropsType = {
@@ -45,7 +45,7 @@ export class UsersContainer extends React.Component<UsersPropsType> {
 
     render() {
         return <>
-            {this.props.usersData.isFetching ?
+            {this.props.isFetching ?
                 <Preloader/>
                 : null}
             <Users
@@ -61,30 +61,33 @@ export class UsersContainer extends React.Component<UsersPropsType> {
                 totalUsersCount={this.props.totalUsersCount}
                 pageSize={this.props.pageSize}
                 getUsers={this.props.getUsers}
+                countSomethingDifficult = {this.props.countSomethingDifficult}
             />
         </>
     }
 }
 
 type MapStatePropsType = {
-    usersData: InitialStateTypeToUsers
+    usersData: UserType[]
     pageSize: number
     currentPage: number
     totalUsersCount: number
     isFetching: boolean
     followingInProgress: Array<FollowingInProgressType>
-    getUsers: any
+    getUsers: getUsersType[]
+    countSomethingDifficult: number
 }
 
 let mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
-        usersData: getUsersData(state),
+        usersData: getUsersSuperSelector(state), //todo lsn 83 selector
         pageSize: getPageSize(state),
         currentPage: getCurrentPage(state),
         totalUsersCount: getTotalUsersCount(state),
         isFetching: getIsFetching(state),
         followingInProgress: getFollowingInProgress(state),
-        getUsers: getUsers(state)
+        getUsers: getUsers(state),
+        countSomethingDifficult: countSomethingDifficult()
     }
 }
 

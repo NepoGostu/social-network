@@ -20,17 +20,17 @@ export const getFollowingInProgress = (state: AppStateType) => {
 export const getUsers = (state: AppStateType) => {
     return state.usersData.getUsers
 }
-export const getUsersData = (state: AppStateType) => {
+const getUsersData = (state: AppStateType) => {
     return state.usersData.users
 }
-export const getUsersSelector = (state: AppStateType) => {
+const getUsersSelector = (state: AppStateType) => {
     return getUsersData(state).filter(u => true)
 }
-export const getUsersSuperSelector = createSelector (getUsersData, (users, ) => {
+export const getUsersSuperSelector = createSelector (getUsersSelector, (users, ) => { // todo lsn 83 selector typeoff
     return users.filter(u => true)
 })
 
-export const countSomethingDifficult = (state: AppStateType) => {
+export const countSomethingDifficult = () => {
     let count = 23
     return count
 }
