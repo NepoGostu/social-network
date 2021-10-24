@@ -1,6 +1,5 @@
 import React from 'react';
 import s from './ProfileInfo.module.css'
-import ProfileStatus from './ProfileStatus'
 import {ProfilePropsType} from '../Profile';
 import ProfileStatusWithHooks from './ProfileStatusWithHooks';
 

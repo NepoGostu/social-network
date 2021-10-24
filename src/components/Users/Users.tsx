@@ -9,7 +9,7 @@ type  PropsType = {
 }
 let Users = (props: UsersPropsType & PropsType) => {
 
-    let pagesCount = props.usersData.totalUsersCount / props.usersData.pageSize;
+    let pagesCount = props.totalUsersCount / props.pageSize;
     let pages = [];
     for (let i = 0; i < pagesCount; i++) {
         pages.push(i);
@@ -18,14 +18,14 @@ let Users = (props: UsersPropsType & PropsType) => {
     return <div>
         <div>
             {pages.map(p => {
-                return <span className={props.usersData.currentPage === p ? styles.selectedPage : ''}
+                return <span className={props.currentPage === p ? styles.selectedPage : ''}
                              onClick={(e) => {
                                  props.onPageChanged(p)
                              }}>{p}</span>
             })}
         </div>
         {
-            props.usersData.users.map(u => <div key={u.id}>
+            props.usersData.map(u => <div key={u.id}>
         <span>
             <div>
                 <NavLink to={'/profile/' + u.id}>

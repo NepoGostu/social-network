@@ -1,25 +1,28 @@
-import React, {Component, ComponentType} from 'react';
+import React, {ComponentType} from 'react';
 import {connect} from 'react-redux';
 import {
     follow,
     FollowingInProgressType,
+    getUsersType,
     requestUsers,
-    InitialStateTypeToUsers,
     setCurrentPage,
     toggleFollowingInProgress,
-    unfollow, UserType, getUsersType
+    unfollow,
+    UserType
 } from '../../redux/users-reducer';
 import {AppStateType} from '../../redux/redux-store';
 import Users from './Users';
 import Preloader from '../common/Preloader/Preloader';
-import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 import {compose} from 'redux';
 import {
-    getCurrentPage, getFollowingInProgress, getUsers,
+    countSomethingDifficult,
+    getCurrentPage,
+    getFollowingInProgress,
     getIsFetching,
     getPageSize,
     getTotalUsersCount,
-    getUsersSuperSelector, countSomethingDifficult
+    getUsers,
+    getUsersSuperSelector
 } from '../../redux/users-selectors';
 
 type MapDispatchPropsType = {
@@ -90,12 +93,6 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
         countSomethingDifficult: countSomethingDifficult()
     }
 }
-
-/*let withRedirect = withAuthRedirect(UsersContainer)
-
-export default connect(mapStateToProps, {
-    follow, unfollow, setCurrentPage, toggleFollowingInProgress, getUsers
-})(withRedirect);*/
 
 export default compose<ComponentType>(
     connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps, {
