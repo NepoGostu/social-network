@@ -1,16 +1,12 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
 import {ProfilePropsType} from '../Profile';
+import {ProfileType} from '../../../redux/profile-reducer';
 
-
-/*type PropType = {
+export type ProfileStatusWithHooksPropsType = {
+    profile: ProfileType | null
     status: string
+    updateStatus: (status: string) => void
 }
-
-type StateProps = {
-    editMode: boolean,
-    status: string
-
-}*/
 
 const ProfileStatusWithHooks = (props: any) => { // todo lsn 84 wtf typeof
 

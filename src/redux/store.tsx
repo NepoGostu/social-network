@@ -1,4 +1,4 @@
-import profileReducer, {addPostAC, ProfileType, setStatus, setUserProfile} from './profile-reducer';
+import profileReducer, {addPostAC, deletePost, ProfileType, setStatus, setUserProfile} from './profile-reducer';
 import dialogsReducer, {sendMessageAC, updateNewMessageBodyAC} from './dialogs-reducer';
 import sidebarReducer from './sidebar-reducer';
 import {
@@ -12,6 +12,7 @@ import {
 } from './users-reducer';
 import {setAuthUserData} from './auth-reducer';
 import {setInitializedSuccess} from './app-reducer';
+import {isValidElement} from 'react';
 
 export type StoryType = {
     _state: StateType
@@ -72,7 +73,8 @@ export type ActionsTypes =
     | ReturnType<typeof setAuthUserData>
     | ReturnType<typeof toggleFollowingInProgress>
     | ReturnType<typeof setStatus>
-| ReturnType<typeof setInitializedSuccess>
+    | ReturnType<typeof setInitializedSuccess>
+    | ReturnType<typeof deletePost>
 
 export const store: StoryType = {
     _state: {

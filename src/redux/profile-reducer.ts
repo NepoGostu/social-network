@@ -1,6 +1,6 @@
 import {ActionsTypes,} from './store';
 import {UsersLocationType} from './users-reducer';
-import {profileAPI, usersAPI} from '../api/api';
+import {profileAPI} from '../api/api';
 import {Dispatch} from 'redux';
 
 export type ProfileType = {
@@ -40,12 +40,17 @@ let initialState: InitialStateTypeToPosts = {
 };
 
 const ADD_POST = 'ADD-POST';
-// const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const SET_USERS_PROFILE = 'SET-USERS-PROFILE';
 const SET_STATUS = 'SET-STATUS'
+const DELETE_POST = 'DELETE-POST'
 
 const profileReducer = (state: InitialStateTypeToPosts = initialState, action: ActionsTypes): InitialStateTypeToPosts => {
     switch (action.type) {
+        case DELETE_POST: {
+            return {...state, posts: state.posts.filter(p => p.id !=action.postId)
+
+            }
+        }
         case SET_STATUS: {
             return {
                 ...state,
@@ -65,12 +70,6 @@ const profileReducer = (state: InitialStateTypeToPosts = initialState, action: A
                 newPostText: ''
             }
         }
-        /*case UPDATE_NEW_POST_TEXT: {
-            return {
-                ...state,
-                newPostText: action.newText
-            };
-        }*/
         case SET_USERS_PROFILE: {
             return {
                 ...state,
@@ -82,6 +81,12 @@ const profileReducer = (state: InitialStateTypeToPosts = initialState, action: A
     }
 }
 
+export const deletePost = (postId: number) => {
+    return {
+        type: DELETE_POST,
+        postId
+    } as const
+}
 
 export const addPostAC = (newPostText: any) => { // todo lsn 76 typeof
     return {
@@ -89,12 +94,6 @@ export const addPostAC = (newPostText: any) => { // todo lsn 76 typeof
         newPostText
     } as const
 }
-/*export const changeNewTextAC = (newText: string) => {
-    return {
-        type: UPDATE_NEW_POST_TEXT,
-        newText: newText
-    } as const
-}*/
 export const setUserProfile = (profile: ProfileType) => {
     return {
         type: SET_USERS_PROFILE,
@@ -108,20 +107,20 @@ export const setStatus = (status: string) => {
     } as const
 }
 
-export const getStatus = (userId: number) => (dispatch: Dispatch ) => {
+export const getStatus = (userId: number) => (dispatch: Dispatch) => {
     profileAPI.getStatus(userId).then(response => {
         dispatch(setStatus(response.data))
     })
 }
 
-export const updateStatus = (status: string) => (dispatch: Dispatch ) => {
+export const updateStatus = (status: string) => (dispatch: Dispatch) => {
     profileAPI.updateStatus(status)
         .then(response => {
-            if(response.data.resultCode === 0) {
-            dispatch(setStatus(status))
-        }
+            if (response.data.resultCode === 0) {
+                dispatch(setStatus(status))
+            }
 
-    })
+        })
 }
 
 export const getUserProfile = (userId: number) => (dispatch: Dispatch) => {

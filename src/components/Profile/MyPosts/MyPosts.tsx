@@ -2,7 +2,6 @@ import React from 'react';
 import s from './MyPosts.module.css'
 import Post from './Post/Post';
 import {MyPostPropsType} from './MyPostsContainer';
-import {PostsType} from '../../../redux/profile-reducer';
 import {Field, InjectedFormProps, reduxForm} from 'redux-form';
 import {maxLengthCreator, required} from '../../../utils/validators/validators';
 import {TextArea} from '../../common/FormsControls/FormsControls';
@@ -19,7 +18,6 @@ const maxLength10 = maxLengthCreator(10)
 
 
 let AddNewPostForm: React.FC<InjectedFormProps<MyPostsType>> = (
-    /*props: { onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void, props: MyPostPropsType, onClick: () => void }*/
     props
 ) => {
     return <form onSubmit={props.handleSubmit}>
@@ -45,7 +43,7 @@ let AddNewPostForm: React.FC<InjectedFormProps<MyPostsType>> = (
 
 let AddNewPostFormRedux = reduxForm<MyPostsType>({form: 'ProfileAddNewPostForm'})(AddNewPostForm)
 
-const MyPosts = (props: MyPostPropsType) => {
+function MyPosts(props: MyPostPropsType) {
     const postElements = props.posts.map(p => <Post
         key={p.id}
         message={p.message}
