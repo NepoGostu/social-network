@@ -69,7 +69,7 @@ class App extends React.Component<AllType> {
     }
 }
 
-const mapStateToProps = (state: AppStateType): any => {
+const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         initialized: state.app.initialized
     }

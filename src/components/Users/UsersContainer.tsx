@@ -39,11 +39,13 @@ export type UsersPropsType = MapStatePropsType & MapDispatchPropsType
 export class UsersContainer extends React.Component<UsersPropsType> {
 
     componentDidMount() {
-        this.props.getUsers(this.props.currentPage, this.props.pageSize)
+        let {currentPage, pageSize} = this.props
+        this.props.getUsers(currentPage, pageSize)
     }
 
     onPageChanged = (pageNumber: number) => {
-        this.props.getUsers(pageNumber, this.props.pageSize)
+        const {pageSize} = this.props
+        this.props.getUsers(pageNumber, pageSize)
     }
 
     render() {
@@ -52,19 +54,19 @@ export class UsersContainer extends React.Component<UsersPropsType> {
                 <Preloader/>
                 : null}
             <Users
-                onPageChanged={this.onPageChanged}
                 follow={this.props.follow}
                 unfollow={this.props.unfollow}
-                setCurrentPage={this.props.setCurrentPage}
-                usersData={this.props.usersData}
-                toggleFollowingInProgress={this.props.toggleFollowingInProgress}
+                onPageChanged={this.onPageChanged}
+                // setCurrentPage={this.props.setCurrentPage}
+                users={this.props.usersData}
+                // toggleFollowingInProgress={this.props.toggleFollowingInProgress}
                 followingInProgress={this.props.followingInProgress}
                 currentPage={this.props.currentPage}
-                isFetching={this.props.isFetching}
+                // isFetching={this.props.isFetching}
                 totalUsersCount={this.props.totalUsersCount}
                 pageSize={this.props.pageSize}
-                getUsers={this.props.getUsers}
-                countSomethingDifficult = {this.props.countSomethingDifficult}
+                // getUsers={this.props.getUsers}
+                // countSomethingDifficult = {this.props.countSomethingDifficult}
             />
         </>
     }

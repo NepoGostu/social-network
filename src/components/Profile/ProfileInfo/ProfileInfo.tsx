@@ -3,15 +3,15 @@ import s from './ProfileInfo.module.css'
 import {ProfilePropsType} from '../Profile';
 import ProfileStatusWithHooks from './ProfileStatusWithHooks';
 
-const ProfileInfo = (props: ProfilePropsType) => {
+const ProfileInfo = ({profile, status, updateStatus}: ProfilePropsType) => {
     return (
         <div>
             <div className={s.descriptionBlock}>
-                {props.profile?.photos.large && <img src={props.profile.photos.large} alt="photo"/>}
+                {profile?.photos.large && <img src={profile.photos.large} alt="photo"/>}
                 <ProfileStatusWithHooks
-                    status={props.status}
-                    profile={props.profile}
-                    updateStatus={props.updateStatus}
+                    status={status}
+                    profile={profile}
+                    updateStatus={updateStatus}
                 />
             </div>
         </div>
