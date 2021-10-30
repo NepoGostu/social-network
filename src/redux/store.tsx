@@ -12,7 +12,8 @@ import {
 } from './users-reducer';
 import {setAuthUserData} from './auth-reducer';
 import {setInitializedSuccess} from './app-reducer';
-import {isValidElement} from 'react';
+import {reducer} from 'redux-form';
+import {applyMiddleware, compose, createStore} from 'redux';
 
 export type StoryType = {
     _state: StateType
