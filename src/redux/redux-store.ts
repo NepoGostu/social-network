@@ -30,6 +30,6 @@ const store = createStore(rootReducers,  composeEnhancers(applyMiddleware(thunkM
 export type AppStateType = ReturnType<typeof rootReducers>
 window.__store__ = store
 
-// let store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
+
 
 export default store;
