@@ -34,3 +34,7 @@ export const countSomethingDifficult = () => {
     let count = 23
     return count
 }
+
+export const getPortionSize = (state:AppStateType) => {
+    return state.usersData.portionSize
+}

@@ -5,12 +5,13 @@ import {updateObjectInArray} from '../utils/object-helpers';
 
 let initialState: InitialStateTypeToUsers = {
     users: [],
-    pageSize: 5,
-    totalUsersCount: 54,
+    pageSize: 10,
+    totalUsersCount: 0,
     currentPage: 1,
     isFetching: true,
     followingInProgress: [],
-    getUsers: []
+    getUsers: [],
+    portionSize: 10
 }
 
 export type FollowingInProgressType = number | boolean
@@ -22,7 +23,7 @@ export type InitialStateTypeToUsers = {
     isFetching: boolean,
     followingInProgress: Array<FollowingInProgressType>,
     getUsers: getUsersType[],
-
+    portionSize: number
 }
 export type UsersLocationType = {
     city: string
@@ -66,12 +67,12 @@ const usersReducer = (state: InitialStateTypeToUsers = initialState, action: Act
             return {
                 ...state,
                 users: updateObjectInArray({users: state.users, usersId: action.userId, followed: false})
-              /*  users: state.users.map(u => {
-                    if (u.id === action.userId) {
-                        return {...u, followed: false}
-                    }
-                    return u
-                })*/
+                /*  users: state.users.map(u => {
+                      if (u.id === action.userId) {
+                          return {...u, followed: false}
+                      }
+                      return u
+                  })*/
             }
         case SET_USERS: {
             return {...state, users: action.users}

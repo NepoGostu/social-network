@@ -18,11 +18,11 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (handleSubmit: any,
     return <form onSubmit={handleSubmit}>
             {createField('Email', 'email', [required], Input)}
             {createField('Password', 'password', [required], Input, {type: 'password'})}
-            {createField(null,'rememberMe',  [required], Input, {type: 'checkbox'}, 'remember me')}
-        <div>
-            props.error && <div className={style.formSummaryError}/>
-            {error}
-        </div>
+            {createField(null,'rememberMe',  [], Input, {type: 'checkbox'}, 'remember me')}
+<div>
+    {error && <div className={style.formSummaryError}/>}
+    {/*{error}*/}
+</div>
         <div>
             <button>Login</button>
         </div>
@@ -36,9 +36,9 @@ const Login = (isAuth:boolean, login: (email: string, password: string, remember
         login(formData.email, formData.password, formData.rememberMe)
     }
 
-    if (isAuth) {
+  /*  if (isAuth) {
         return <Redirect to = {'/profile'}/>
-    }
+    }*/
 
     return <div>
         <h1>LOGIN</h1>

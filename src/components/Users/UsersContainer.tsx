@@ -19,7 +19,7 @@ import {
     getCurrentPage,
     getFollowingInProgress,
     getIsFetching,
-    getPageSize,
+    getPageSize, getPortionSize,
     getTotalUsersCount,
     getUsers,
     getUsersSuperSelector
@@ -31,7 +31,6 @@ type MapDispatchPropsType = {
     setCurrentPage: (pageNumber: number) => void
     toggleFollowingInProgress: (isFetching: boolean, userId: number) => void
     getUsers: (currentPage: number, pageSize: number) => void
-
 }
 
 export type UsersPropsType = MapStatePropsType & MapDispatchPropsType
@@ -57,16 +56,12 @@ export class UsersContainer extends React.Component<UsersPropsType> {
                 follow={this.props.follow}
                 unfollow={this.props.unfollow}
                 onPageChanged={this.onPageChanged}
-                // setCurrentPage={this.props.setCurrentPage}
                 users={this.props.usersData}
-                // toggleFollowingInProgress={this.props.toggleFollowingInProgress}
                 followingInProgress={this.props.followingInProgress}
                 currentPage={this.props.currentPage}
-                // isFetching={this.props.isFetching}
                 totalUsersCount={this.props.totalUsersCount}
                 pageSize={this.props.pageSize}
-                // getUsers={this.props.getUsers}
-                // countSomethingDifficult = {this.props.countSomethingDifficult}
+                portionSize = {this.props.portionSize}
             />
         </>
     }
@@ -81,6 +76,7 @@ type MapStatePropsType = {
     followingInProgress: Array<FollowingInProgressType>
     getUsers: getUsersType[]
     countSomethingDifficult: number
+    portionSize: number
 }
 
 let mapStateToProps = (state: AppStateType): MapStatePropsType => {
@@ -92,7 +88,8 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
         isFetching: getIsFetching(state),
         followingInProgress: getFollowingInProgress(state),
         getUsers: getUsers(state),
-        countSomethingDifficult: countSomethingDifficult()
+        countSomethingDifficult: countSomethingDifficult(),
+        portionSize: getPortionSize(state)
     }
 }
 
@@ -104,5 +101,4 @@ export default compose<ComponentType>(
         toggleFollowingInProgress,
         getUsers: requestUsers
     }),
-    // withAuthRedirect
 )(UsersContainer)

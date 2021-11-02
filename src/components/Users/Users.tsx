@@ -12,6 +12,7 @@ type  PropsType = {
     pageSize: number,
     users: UserType[]
     followingInProgress: Array<FollowingInProgressType>
+    portionSize: number
 }
 let Users = ({
                  currentPage,
@@ -21,7 +22,8 @@ let Users = ({
                  users,
                  followingInProgress,
                  follow,
-                 unfollow
+                 unfollow,
+                 portionSize
              }: PropsType) => {
 
     return (
@@ -31,6 +33,7 @@ let Users = ({
                 onPageChanged={onPageChanged}
                 totalUsersCount={totalUsersCount}
                 pageSize={pageSize}
+                portionSize={portionSize}
             />
             <div>
                 {

@@ -4,9 +4,6 @@ import userPhoto from '../../assest/image/78-786207_user-avatar-png-user-avatar-
 import {NavLink} from 'react-router-dom';
 import {FollowingInProgressType, UserType} from '../../redux/users-reducer';
 
-/*type  PropsType = {
-    onPageChanged: (pageNumber: number) => void
-}*/
 
 type UserPropsType = {// todo lsn 90 wtf typeof
     user: UserType
