@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Users.module.css';
-import userPhoto from '../../assest/image/78-786207_user-avatar-png-user-avatar-icon-png-transparent.jpg';
+import userPhoto from '../../assest/image/user.jpg';
 import {NavLink} from 'react-router-dom';
 import {FollowingInProgressType, UserType} from '../../redux/users-reducer';
 

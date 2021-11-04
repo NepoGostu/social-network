@@ -16,7 +16,6 @@ const INITIALIZED_SUCCESS = 'INITIALIZED-SUCCESS';
 
 
 const appReducer = (state: InitialStateTypeAuth = initialState, action: ActionsTypes): InitialStateTypeAuth => {
-
     switch (action.type) {
         case INITIALIZED_SUCCESS:
             return {
@@ -36,7 +35,7 @@ export const setInitializedSuccess = () => {
 export const initializeApp = (): ThunkType => (dispatch) => {
     let promise = dispatch(getAuthUserData())
     Promise.all([promise]).then(() => {
-        dispatch(setInitializedSuccess())
+         dispatch(setInitializedSuccess())
     })
 }
 

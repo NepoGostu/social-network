@@ -1,4 +1,11 @@
-import profileReducer, {addPostAC, deletePost, ProfileType, setStatus, setUserProfile} from './profile-reducer';
+import profileReducer, {
+    addPostAC,
+    deletePost,
+    ProfileType,
+    savePhotoSuccess,
+    setStatus,
+    setUserProfile
+} from './profile-reducer';
 import dialogsReducer, {sendMessageAC, updateNewMessageBodyAC} from './dialogs-reducer';
 import sidebarReducer from './sidebar-reducer';
 import {
@@ -76,6 +83,7 @@ export type ActionsTypes =
     | ReturnType<typeof setStatus>
     | ReturnType<typeof setInitializedSuccess>
     | ReturnType<typeof deletePost>
+    | ReturnType<typeof savePhotoSuccess>
 
 export const store: StoryType = {
     _state: {

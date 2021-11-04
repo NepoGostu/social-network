@@ -3,6 +3,7 @@ import {authAPI} from '../api/api';
 import {ThunkAction} from 'redux-thunk'
 import {AppStateType} from './redux-store';
 import {stopSubmit} from 'redux-form';
+import {Dispatch} from 'redux';
 
 let initialState: InitialStateTypeAuth = {
     userID: null,
@@ -41,7 +42,7 @@ export const setAuthUserData = (authData: InitialStateTypeAuth) => {
         authData
     } as const
 }
-export const getAuthUserData = (): ThunkType => async (dispatch) => {
+export const getAuthUserData = () => async (dispatch: Dispatch) => {
     let response = await authAPI.me()
         if (response.data.resultCode === 0) {
             let {id: userID, email, login} = response.data.data

@@ -5,7 +5,7 @@ type updateObjectInArrayType = {// todo lsn 90 wtf typeof
     usersId: number
     followed: boolean
 }
-export const updateObjectInArray = ({users, usersId, followed}: updateObjectInArrayType) => {
+export const updateObjectInArray = ({users, usersId}: updateObjectInArrayType) => {
   return users.map(u => {
                     if (u.id === usersId) {
                         return {...u, followed: true}

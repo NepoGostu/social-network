@@ -5,9 +5,6 @@ import {BrowserRouter, Route, withRouter} from 'react-router-dom';
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
-import DialogsContainer from './components/Dialogs/DialogsContainer';
-import UsersContainer from './components/Users/UsersContainer';
-import ProfileContainer from './components/Profile/ProfileContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
 import Login from './components/Login/Login';
 import {connect, Provider} from 'react-redux';
@@ -15,6 +12,12 @@ import {compose} from 'redux';
 import {initializeApp} from './redux/app-reducer';
 import Preloader from './components/common/Preloader/Preloader';
 import store, {AppStateType} from './redux/redux-store';
+import {
+    withSuspenseForDialogsContainer,
+    withSuspenseForProfileContainer,
+    withSuspenseForUsersContainer
+} from './hoc/withSuspense';
+
 
 type MapStateToPropsType = {
     initialized: boolean
@@ -31,6 +34,11 @@ export type MenuItemType = {
     title: string
     id: number
 }
+
+/*const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
+const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
+const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'));*/
+
 
 class App extends React.Component<AllType> {
 
@@ -56,12 +64,12 @@ class App extends React.Component<AllType> {
                 <HeaderContainer/>
                 <Navbar menuItems={menuItems}/>
                 <div className="app-wrapper-content">
-                    <Route exact path="/profile/:id?" render={() => <ProfileContainer/>}/>
-                    <Route exact path="/dialog" render={() => <DialogsContainer/>}/>
+                    <Route exact path="/profile/:id?" render={() => withSuspenseForProfileContainer('ProfileContainer')}/>
+                    <Route exact path="/dialog" render={() => withSuspenseForDialogsContainer('DialogsContainer')}/>
                     <Route exact path="/news" render={() => <News/>}/>
                     <Route exact path="/music" render={() => <Music/>}/>
                     <Route exact path="/settings" render={() => <Settings/>}/>
-                    <Route exact path="/users" render={() => <UsersContainer/>}/>
+                    <Route exact path="/users" render={() => withSuspenseForUsersContainer('UsersContainer')}/>
                     <Route exact path="/login" render={() => <Login/>}/>
                 </div>
             </div>
@@ -75,12 +83,12 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     }
 }
 
-const AppContainer =  compose<ComponentType>(
+const AppContainer = compose<ComponentType>(
     connect(mapStateToProps, {initializeApp}),
     withRouter)(App);
 
-export const SamuraiJSApp = ()=> {
-   return  <BrowserRouter>
+export const SamuraiJSApp = () => {
+    return <BrowserRouter>
         <Provider store={store}>
             <AppContainer/>
         </Provider>
