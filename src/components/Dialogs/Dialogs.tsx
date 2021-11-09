@@ -1,33 +1,42 @@
 import React from 'react';
-import s from './Dialogs.module.css'
-import DialogItem from './DialogItem/DialoItems';
+
+
+import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
-import {DialogPropsType} from './DialogsContainer';
-import {AddMessageFormRedux} from './Message/AddMessageForm';
 
+import styles from './Dialogs.module.css';
+import AddMessageReduxForm from './AddMessageForm/AddMessageForm';
+import {DialogsPagePropsType} from "../../outside/dialogs-reducer";
 
-const Dialogs = (props: DialogPropsType) => {
-    let state = props.dialogsData;
-    let dialogElements = state.dialogs.map(d => <DialogItem name={d.name} key={d.id} id={d.id}/>)
-    let messageElements = state.messages.map(m => <Message message={m.message} key={m.id} id={m.id}/>)
-    let newMessageBody = state.newMessageBody
-    let addNewMessage = (values: any) => {  // todo lsn 76 typeof
-        props.sendMessage(newMessageBody)
+type DialogsPropsType = {
+    dialogsPage: DialogsPagePropsType
+    sendMessage: (newMessageBody: string) => void
+}
+
+export type AddMessagePropsType = {
+    newMessageBody: string
+}
+
+const Dialogs = (props: DialogsPropsType) => {
+
+    const dialogsElements = props.dialogsPage.dialogs.map(d => <DialogItem key={d.id} id={d.id} name={d.name} avatar={d.avatar} />)
+
+    const messagesElements = props.dialogsPage.messages.map(m => <Message key={m.id} id={m.id} message={m.message} time={m.time} />)
+
+    const addNewMessage = (values: AddMessagePropsType) => {
+        props.sendMessage(values.newMessageBody)
+        values.newMessageBody = " "
     }
-    // todo lsn 78 didnt work not yet
-    /* if (!props.isAuth) {
-         return <Redirect to={'/login'}/>
-     }*/
 
     return (
-        <div className={s.dialogs}>
-            <div className={s.dialogItems}>
-                {dialogElements}
+        <div className={styles.dialogsWrapper}>
+            <div className={styles.dialogsItems}>
+                {dialogsElements}
             </div>
-            <div className={s.messages}>
-                <div> {messageElements}</div>
-                <AddMessageFormRedux onSubmit={addNewMessage}/>
+            <div className={styles.messages}>
+                {messagesElements}
             </div>
+            <AddMessageReduxForm onSubmit={addNewMessage} />
         </div>
     )
 }

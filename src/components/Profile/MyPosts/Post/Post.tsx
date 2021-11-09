@@ -1,18 +1,41 @@
 import React from 'react';
-import s from './Post.module.css'
+import styles from './Post.module.css';
 
-type MyPostsType = {
+type PostPropsType = {
+    id: string
     message: string
+    time: string
+    liked: boolean
     likesCount: number
+    like: (postID: string) => void
+    unlike: (postID: string) => void
 }
 
-const Post = (props:MyPostsType) => {
+const Post = (props: PostPropsType) => {
     return (
-        <div className={s.item}>
-            <img src='https://d2skuhm0vrry40.cloudfront.net/2013/articles/1/7/7/0/3/2/5/e-se-as-heroinas-dos-videojogos-tivessem-corpos-mais-realistas-1437837874389.jpg/EG11/resize/1200x-1/e-se-as-heroinas-dos-videojogos-tivessem-corpos-mais-realistas-1437837874389.jpg' />
-            {props.message}
-            <div>
-                <span>like {props.likesCount}</span>
+        <div className={styles.postItemWrapper}>
+            <img src='https://yt3.ggpht.com/ytc/AKedOLQTOrbuh25vkoon4ROhjjbJXX3jVrEaAYK6BDUB=s900-c-k-c0x00ffffff-no-rj' alt='post-photo' />
+            <div className={styles.postItem}>
+                {props.message}
+                <div className={styles.postLikeTimeWrapper}>
+                    <div className={styles.postLike}>
+                        {
+                            props.liked
+                                ? <button onClick={() => { props.unlike(props.id) }}>
+                                    <img src='https://iconarchive.com/download/i102621/graphicloads/flat-finance/dislike.ico' alt='like' style={{ width: '20px', height: '20px' }} />
+                                </button>
+                                : <button onClick={() => props.like(props.id)}>
+                                    <img src='https://cdn.worldvectorlogo.com/logos/facebook-like.svg' alt='dislike' style={{ width: '20px', height: '20px' }}/>
+                                </button>
+                        }
+                        <span>{props.likesCount}</span>
+                    </div>
+
+                    <div className={styles.postTime}>
+                        {props.time}
+                    </div>
+                </div>
+
             </div>
         </div>
     )

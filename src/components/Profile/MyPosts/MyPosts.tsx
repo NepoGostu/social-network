@@ -1,76 +1,72 @@
 import React from 'react';
-import s from './MyPosts.module.css'
 import Post from './Post/Post';
-import {MyPostPropsType} from './MyPostsContainer';
+import styles from './MyPosts.module.css';
 import {Field, InjectedFormProps, reduxForm} from 'redux-form';
-import {maxLengthCreator, required} from '../../../utils/validators/validators';
-import {TextArea} from '../../common/FormsControls/FormsControls';
+import {PostType} from '../../../outside/profile-reducer';
+import {maxLengthCreator, required} from '../../../utils/validators/validatos';
+import {Textarea} from '../../Common/FormsControls/FormControl';
 
-export type MyPostsType = {
-    // posts: PostsType[]
+type MyPostsPropsType = {
+    posts: Array<PostType>
+    addPost: (newPostText: string) => void
+    like: (postID: string) => void
+    unlike: (postID: string) => void
+}
+
+type AddPostPropsType = {
     newPostText: string
-    // updateNewPostText: (text: string) => void
-    // addPost: () => void
-    textarea: string
 }
 
-const maxLength10 = maxLengthCreator(10)
+const MyPosts = React.memo((props: MyPostsPropsType) => {
 
-
-let AddNewPostForm: React.FC<InjectedFormProps<MyPostsType>> = (
-    props
-) => {
-    return <form onSubmit={props.handleSubmit}>
-        <div>
-            <Field
-                name="newPostText"
-                component={TextArea}
-                validate={[required, maxLength10]}
-                placeholder = {'Post message'}
-            />
-            {/* <textarea onChange={props.onChange}
-                              value={props.props.newPostText}
-                    />*/}
-        </div>
-        <div>
-            <button
-                // onClick={props.onClick}
-            >Add post
-            </button>
-        </div>
-    </form>;
-}
-
-let AddNewPostFormRedux = reduxForm<MyPostsType>({form: 'ProfileAddNewPostForm'})(AddNewPostForm)
-
-function MyPosts(props: MyPostPropsType) {
-    const postElements = props.posts.map(p => <Post
+    const postsElements = props.posts.map(p => <Post
         key={p.id}
+        id={p.id}
         message={p.message}
+        time={p.time}
+        liked={p.liked}
         likesCount={p.likesCount}
-    />);
+        like={props.like}
+        unlike={props.unlike}/>).reverse()
 
-    const onAddPost = (values: any) => { // todo lsn 76 typeof
-        props.addPost(values.newPostText);
+    const onAddPost = (values: AddPostPropsType) => {
+        props.addPost(values.newPostText)
+        values.newPostText = ' '
     }
-    /*  const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-          let text = e.currentTarget.value; // 43 wtf
-          props.updateNewPostText(text);
-      }*/
-
-    // const AddNewPostForm = (props: any) => { // todo lsn 76 typeoff
-    //   return  <AddNewPostForm onSubmit={onAddPost}/>
-    // }
 
     return (
-        <div className={s.postsBlock}>
-            <h3>My posts</h3>
-            <AddNewPostFormRedux onSubmit={onAddPost}/>
-            <div className={s.posts}>
-                {postElements}
+        <div className={styles.postsWrapper}>
+            <div className={styles.postsTitle}>
+                What's new?
+            </div>
+            <AddNewPostReduxFrom onSubmit={onAddPost}/>
+            <div className={styles.posts}>
+                {postsElements}
             </div>
         </div>
     )
+})
+
+const maxLengthCreator500 = maxLengthCreator(500)
+
+const AddNewPostFrom: React.FC<InjectedFormProps<AddPostPropsType>> = (props) => {
+    return (
+        <form className={styles.addPost} onSubmit={props.handleSubmit}>
+            <div>
+                <Field
+                    name="newPostText"
+                    component={Textarea}
+                    placeholder="Add a note..."
+                    wrap="hard"
+                    validate={[required, maxLengthCreator500]}/>
+            </div>
+            <div className={styles.addPostBtn}>
+                <button>Add post</button>
+            </div>
+        </form>
+    )
 }
+
+const AddNewPostReduxFrom = reduxForm<AddPostPropsType>({form: 'profileAddNewPostFrom'})(AddNewPostFrom)
 
 export default MyPosts;

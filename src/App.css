@@ -1,20 +1,22 @@
+html, body {
+    height: 100%;
+    background-color: rgba(238, 238, 238, 0.93);
+}
+
 .app-wrapper {
     margin: 0 auto;
-    width: 1200px;
+    width: 950px;
+    height: 900px;
     display: grid;
-
-
     grid-template-areas:
-"h h "
-"n c";
-
-    grid-template-rows: 60px 1fr;
-    grid-template-columns: 2fr 10fr;
-    /*grid-gap: 10px; */
+  "h h"
+  "n c";
+    grid-template-rows: 70px 1fr;
+    grid-template-columns: 2fr 6fr;
 }
 
 .app-wrapper-content {
     grid-area: c;
-    background-color: cornflowerblue;
+    background-color: rgba(238, 238, 238, 0.93);
+    border: 2px solid rgba(238, 238, 238, 0.93);
 }
-

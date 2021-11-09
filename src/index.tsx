@@ -1,14 +1,26 @@
 import React from 'react';
-import './index.css';
-import reportWebVitals from './reportWebVitals';
 import ReactDOM from 'react-dom';
-import {SamuraiJSApp} from './App';
+import {BrowserRouter} from "react-router-dom";
+import { Provider } from 'react-redux';
+import reportWebVitals from './reportWebVitals';
+import App from './App';
+import './index.css';
+import store from "./outside/redux-store";
 
+//для смены URL относительно не домена, а папки для BrowserRouter basename = {process.env.PUBLIC_URL}
 
-ReactDOM.render(
-    <SamuraiJSApp/>,
-    document.getElementById('root')
-);
+let rerenderEntireTree = () => {
+    ReactDOM.render(
+        <BrowserRouter>
+            <Provider store={store}>
+                <App />
+            </Provider >
+        </BrowserRouter>,
+        document.getElementById('root')
+    );
+}
+
+rerenderEntireTree();
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

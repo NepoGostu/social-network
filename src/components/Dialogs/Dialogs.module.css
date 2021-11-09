@@ -1,21 +1,17 @@
-.dialogs {
+.dialogsWrapper {
     display: grid;
+    grid-template-areas:
+    "a b"
+    "a d";
     grid-template-columns: 2fr 10fr;
 }
 
-.dialogItems {
-    padding: 10px;
+.dialogsItems{
+    grid-area: a;
+    height: 89vh;
+    border: 2px solid rgba(0, 0, 0, 0.27);
+    border-bottom-style: none;
+    border-top-style: none;
+    border-left-style: none;
 }
 
-.dialogItems .active {
-    color: gold;
-}
-
-.messages {
-    padding: 10px;
-
-}
-
-.messages .message {
-
-}

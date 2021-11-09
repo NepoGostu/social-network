@@ -1,25 +1,21 @@
-import React, {ComponentType} from 'react';
-import './App.css';
-import Navbar from './components/Navbar/Navbar';
-import {BrowserRouter, Route, withRouter} from 'react-router-dom';
-import News from './components/News/News';
-import Music from './components/Music/Music';
-import Settings from './components/Settings/Settings';
-import HeaderContainer from './components/Header/HeaderContainer';
-import Login from './components/Login/Login';
-import {connect, Provider} from 'react-redux';
-import {compose} from 'redux';
-import {initializeApp} from './redux/app-reducer';
-import Preloader from './components/common/Preloader/Preloader';
-import store, {AppStateType} from './redux/redux-store';
-import {
-    withSuspenseForDialogsContainer,
-    withSuspenseForProfileContainer,
-    withSuspenseForUsersContainer
-} from './hoc/withSuspense';
+import React from "react";
+import {Route, withRouter} from "react-router-dom";
+import {connect} from "react-redux";
+import {compose} from "redux";
+import Navbar from "./components/Navbar/Navbar";
+import ProfileContainer from "./components/Profile/ProfileContainer";
+import HeaderContainer from "./components/Header/HeaderContainer";
+import Login from "./components/Login/Login";
+import "./App.css";
+import Downloader from "./components/Common/Preloader/Downloader";
+import {AppStateType} from "./outside/redux-store";
+import {initializeThunkCreator} from "./outside/app-reducer";
+
+const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"))
+const UsersContainer = React.lazy(() => import("./components/Users/UsersContainer"))
 
 
-type MapStateToPropsType = {
+type MapStateToPropsPropsType = {
     initialized: boolean
 }
 
@@ -27,20 +23,7 @@ type MapDispatchToPropsType = {
     initializeApp: () => void
 }
 
-type AllType = MapStateToPropsType & MapDispatchToPropsType
-
-export type MenuItemType = {
-    to: string,
-    title: string
-    id: number
-}
-
-/*const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
-const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
-const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'));*/
-
-
-class App extends React.Component<AllType> {
+class App extends React.Component<MapStateToPropsPropsType & MapDispatchToPropsType> {
 
     componentDidMount() {
         this.props.initializeApp()
@@ -48,49 +31,44 @@ class App extends React.Component<AllType> {
 
     render() {
         if (!this.props.initialized) {
-            return <Preloader/>
+            return <Downloader/>
         }
-        const menuItems: Array<MenuItemType> = [
-            {id: 1, to: '/profile', title: 'Profile'},
-            {id: 2, to: '/dialog', title: 'Messages'},
-            {id: 3, to: '/users', title: 'Users'},
-            {id: 4, to: '/news', title: 'News'},
-            {id: 5, to: '/music', title: 'Music'},
-            {id: 6, to: '/settings', title: 'Settings'},
-        ]
 
         return (
             <div className="app-wrapper">
                 <HeaderContainer/>
-                <Navbar menuItems={menuItems}/>
+                <Navbar/>
                 <div className="app-wrapper-content">
-                    <Route exact path="/profile/:id?" render={() => withSuspenseForProfileContainer('ProfileContainer')}/>
-                    <Route exact path="/dialog" render={() => withSuspenseForDialogsContainer('DialogsContainer')}/>
-                    <Route exact path="/news" render={() => <News/>}/>
-                    <Route exact path="/music" render={() => <Music/>}/>
-                    <Route exact path="/settings" render={() => <Settings/>}/>
-                    <Route exact path="/users" render={() => withSuspenseForUsersContainer('UsersContainer')}/>
-                    <Route exact path="/login" render={() => <Login/>}/>
+                    <Route path="/login"
+                           render={() => <Login/>}/>
+                    <Route path="/profile/:userId?"
+                           render={() => <ProfileContainer/>}/>
+                    <Route path="/paviedamliennia"
+                           render={() => {
+                               return <React.Suspense fallback={<div>Loading...</div>}>
+                                   <DialogsContainer/>
+                               </React.Suspense>
+                           }}/>
+                    <Route path="/users"
+                           render={() => {
+                               return <React.Suspense fallback={<div>Loading...</div>}>
+                                   <UsersContainer/>
+                               </React.Suspense>
+                           }}/>
+
                 </div>
             </div>
         );
     }
 }
 
-const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
+const mapStateToProps = (state: AppStateType): MapStateToPropsPropsType => {
     return {
         initialized: state.app.initialized
     }
 }
 
-const AppContainer = compose<ComponentType>(
-    connect(mapStateToProps, {initializeApp}),
-    withRouter)(App);
-
-export const SamuraiJSApp = () => {
-    return <BrowserRouter>
-        <Provider store={store}>
-            <AppContainer/>
-        </Provider>
-    </BrowserRouter>
-}
+export default compose<React.ComponentType>(
+    connect(mapStateToProps, {initializeApp: initializeThunkCreator}),
+    withRouter
+)(App);

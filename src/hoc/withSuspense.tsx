@@ -1,27 +1,9 @@
-import React from 'react';
-import Preloader from '../components/common/Preloader/Preloader';
-import DialogsContainer from '../components/Dialogs/DialogsContainer';
-import ProfileContainer from '../components/Profile/ProfileContainer';
-import UsersContainer from '../components/Users/UsersContainer';
+import React from "react"
 
-
-export function withSuspenseForDialogsContainer(title: string) {
-
-       return <React.Suspense fallback={<Preloader/>}>
-           {title === 'DialogsContainer' && <DialogsContainer/>}
+export function withSuspense<P>(Component: React.ComponentType<P>) {
+    return (props: P) => {
+        return <React.Suspense fallback={<div>Loading...</div>}>
+            <Component {...props} />
         </React.Suspense>
-}
-
-export function withSuspenseForProfileContainer(title: string) {
-
-    return <React.Suspense fallback={<Preloader/>}>
-        {title === 'ProfileContainer' && <ProfileContainer/>}
-    </React.Suspense>
-}
-
-export function withSuspenseForUsersContainer(title: string) {
-
-    return <React.Suspense fallback={<Preloader/>}>
-        {title === 'UsersContainer' && <UsersContainer/>}
-    </React.Suspense>
+    };
 }

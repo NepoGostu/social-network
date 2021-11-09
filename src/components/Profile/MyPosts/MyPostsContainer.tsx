@@ -1,37 +1,28 @@
-import {addPostAC, PostsType} from '../../../redux/profile-reducer';
+import { connect } from 'react-redux';
 import MyPosts from './MyPosts';
-import {connect} from 'react-redux';
-import {AppStateType} from '../../../redux/redux-store';
-import {Dispatch} from 'redux';
+import {ActionsType, AppStateType} from "../../../outside/redux-store";
+import {AddPostActionCreator, likeAC, unlikeAC} from "../../../outside/profile-reducer";
 
-type MapStatePropsType = {
-    posts: Array<PostsType>
-    newPostText: string
-}
-type MapDispatchPropsType = {
-    // updateNewPostText: (text: string) => void
-    addPost: any
-}
-
-export type MyPostPropsType = MapStatePropsType & MapDispatchPropsType
-
-const mapStateToProps = (state: AppStateType): MapStatePropsType => {
+let mapStateToProps = (state: AppStateType) => {
     return {
-        posts: state.profileData.posts,
-        newPostText: state.profileData.newPostText
+        posts: state.profilePage.posts
     }
 }
-const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
+
+let mapDispatchToProps = (dispatch: (action: ActionsType) => void) => {
     return {
-        /*updateNewPostText: (text: string) => {
-            let action = changeNewTextAC(text);
-            dispatch(action);
-        },*/
-        addPost: (newPostText: any) => { // todo lsn 76 typeof
-            dispatch(addPostAC(newPostText))
-        }
+        addPost: (newPostText: string) => {
+            dispatch(AddPostActionCreator(newPostText))
+        },
+        like: (postID: string) => {
+            dispatch(likeAC(postID))
+        },
+        unlike: (postID: string) => {
+            dispatch(unlikeAC(postID))
+        },
     }
 }
+
 const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts)
 
 export default MyPostsContainer;

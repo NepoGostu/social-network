@@ -1,35 +1,48 @@
-import React from 'react';
-import s from './ProfileInfo.module.css'
-import {ProfilePropsType} from '../Profile';
-import ProfileStatusWithHooks from './ProfileStatusWithHooks';
-import Preloader from '../../common/Preloader/Preloader';
-import userPhoto from '../../../assest/image/user.jpg'
+import React from "react";
+import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
+import styles from "./ProfileInfo.module.css";
+import {ProfileType} from "../../../outside/profile-reducer";
+import Downloader from "../../Common/Preloader/Downloader";
 
-const ProfileInfo = ({profile, status, updateStatus, isOwner, savePhoto}: ProfilePropsType) => {
+export type ProfileInfoPropsType = {
+    profile: ProfileType
+    status: string
+    updateUserStatus: (status: string) => void
+}
 
-    if(!profile) {
-        return <Preloader/>
-    }
+const ProfileInfo = (props: ProfileInfoPropsType) => {
+    let contacts: Array<any> = []
+    props.profile && Object.entries(props.profile.contacts).forEach(([key, value]) => contacts.push(<div
+        key={key}>{value !== null && value !== "" ? `${key}: ${value}` : ``}</div>))
 
-    const onMainPhotoSelected = (e:any) => {// todo wtf typeof
-        if(e.target.files.length) {
-            savePhoto(e.target.files[0])
-        }
+    if (!props.profile?.fullName) {
+        return <Downloader/>
     }
 
     return (
-        <div>
-            <div className={s.descriptionBlock}>
-                {/*{profile?.photos.large && <img src={profile.photos.large} alt="photo"/>}*/}
-                <img src={profile.photos.large || userPhoto} className={s.mainPhoto}/>
-                {isOwner && <input type = {'file'} onChange={onMainPhotoSelected}/>}
-                <ProfileStatusWithHooks
-                    status={status}
-                    profile={profile}
-                    updateStatus={updateStatus}
-                />
-            </div>
-        </div>
+            <div className={styles.profileInfoWrapper}>
+                <img className={styles.profilephoto}
+                     src="https://yt3.ggpht.com/ytc/AKedOLQTOrbuh25vkoon4ROhjjbJXX3jVrEaAYK6BDUB=s900-c-k-c0x00ffffff-no-rj" alt="user"/>
+                <div className={styles.profileInfoDescription}>
+                    <div
+                        className={styles.profileInfoName}>Hello world
+                    </div>
+                    <ProfileStatusWithHooks status={props.status}
+                                            updateUserStatus={props.updateUserStatus}/>
+                    <div className={styles.myyogaclasses}>
+                        <div className={styles.title}>
+                            Looking for a job: {"yes"}
+                        </div>
+                        <div>
+                            {props.profile.lookingForAJobDescription}
+                        </div>
+                    </div>
+                    <div className={styles.title}>About me {props.profile.aboutMe}</div>
+                    <div>{props.profile.aboutMe}</div>
+                    <div className={styles.title}>My contacts{/*: {Object.keys(props.profile.contacts)}*/}</div>
+                    <div className={styles.profileInfoContacts}>{contacts}</div>
+                </div>
+                </div>
     )
 }
 

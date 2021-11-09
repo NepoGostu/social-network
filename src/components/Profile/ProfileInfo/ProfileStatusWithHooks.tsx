@@ -1,53 +1,48 @@
-import React, {ChangeEvent, useEffect, useState} from 'react';
-import {ProfilePropsType} from '../Profile';
-import {ProfileType} from '../../../redux/profile-reducer';
+import React, { ChangeEvent, useEffect, useState } from 'react';
+import styles from './ProfileInfo.module.css';
 
-export type ProfileStatusWithHooksPropsType = {
-    profile: ProfileType | null
+type ProfileStatusPropsType = {
     status: string
-    updateStatus: (status: string) => void
+    updateUserStatus: (status: string) => void
 }
 
-const ProfileStatusWithHooks = (props: any) => { // todo lsn 84 wtf typeof
-
-    let [editMode, setEditMode] = useState(false)
-    let [status, setStatus] = useState(props.status)
-
-    useEffect(() => {
-        setStatus(props.status)
-    }, [props.status])
+const ProfileStatusWithHooks = (props: ProfileStatusPropsType) => {
+    const [editMode, setEditMode] = useState<boolean>(false)
+    const [status, setStatus] = useState<string>(props.status)
 
     const activateEditMode = () => {
         setEditMode(true)
     }
 
-    const deactivatedEditMode = () => {
+    const deactivateEditMode = () => {
         setEditMode(false)
-        props.updateStatus(status)
+        props.updateUserStatus(status)
     }
 
     const onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setStatus({
-            status: e.currentTarget.value
-        })
+        setStatus(e.currentTarget.value)
     }
 
+    useEffect(() => {
+        setStatus(props.status)
+    }, [props.status])
+
     return (
-        <div>
-            {!editMode &&
-            <div>
-                <span onDoubleClick={activateEditMode}>{props.status || '---'}</span>
+        <div className={styles.profileInfoStatus}>
+            <div className={styles.title}>
+
             </div>
+            {
+                !editMode &&
+                <div>
+                   <b>Status: </b> <span onDoubleClick={activateEditMode}>{props.status || 'Add status'}</span>
+                </div>
             }
-            {editMode &&
-            <div>
-                <input
-                    autoFocus={true}
-                    onBlur={deactivatedEditMode}
-                    onChange={onStatusChange}
-                    value = {status}
-                />
-            </div>
+            {
+                editMode &&
+                <div>
+                    <input value={status} autoFocus={true} onBlur={deactivateEditMode} onChange={onStatusChange}></input>
+                </div>
             }
         </div>
     )

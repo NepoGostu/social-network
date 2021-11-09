@@ -1,57 +1,78 @@
-import React from 'react';
-import Paginator from '../common/Paginator/Paginator';
-import User from './User';
-import {FollowingInProgressType, UserType} from '../../redux/users-reducer';
+import React from "react";
+import userPhoto from "../../assets/images/user-avatar.png"
+import styles from "./Users.module.css";
+import {NavLink} from "react-router-dom";
+import {UserType} from "../../outside/users-reducer";
+import Pagination from "../Common/Pagination/Pagination";
 
-type  PropsType = {
-    follow: (userId: number) => void
-    unfollow: (userId: number) => void
-    onPageChanged: (pageNumber: number) => void
+type UsersPropsType = {
+    users: Array<UserType>
+    pageSize: number
     totalUsersCount: number
-    currentPage: number
-    pageSize: number,
-    users: UserType[]
-    followingInProgress: Array<FollowingInProgressType>
-    portionSize: number
+    followingInProgress: Array<number>
+    follow: (userID: number) => void
+    unfollow: (userID: number) => void
+    onPageChanged: (pageNumber: number) => void
 }
-let Users = ({
-                 currentPage,
-                 onPageChanged,
-                 totalUsersCount,
-                 pageSize,
-                 users,
-                 followingInProgress,
-                 follow,
-                 unfollow,
-                 portionSize
-             }: PropsType) => {
 
-    return (
+const Users = (props: UsersPropsType) => {
+    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
+
+    return <div>
+        {
+            props.users.map(u => <div key={u.id} className={styles.userItem}>
+                <div>
+                    <NavLink to={"/profile/" + u.id}>
+                        <img
+                            className={styles.userPhoto}
+                            src={u.photos.small !== null ? u.photos.small : userPhoto}
+                            alt="friend"/>
+                    </NavLink>
+                </div>
+                <div className={styles.userItemProfileInfo}>
+                    <div className={styles.userItemName}>{u.name}</div>
+                    <div className={styles.userItemLocation}>{"props.location"}</div>
+                    <div className={styles.userItemStatus}>{"props.status"}</div>
+                </div>
+                <div className={styles.followBtn}>
+                    {u.followed
+                        ? <button
+                            disabled={props.followingInProgress.some(id => id === u.id)}
+                            onClick={() => {
+                                props.unfollow(u.id)
+                            }}
+                            style={{
+                                backgroundColor: "gray",
+                                fontFamily: "Monserrat",
+                                fontSize: "20px",
+                                cursor: "pointer",
+                                boxShadow: "inset 0 20px 20px #ffffff",
+                                borderRadius: "8px"
+                            }}>Unfollow</button>
+                        : <button
+                            disabled={props.followingInProgress.some(id => id === u.id)}
+                            onClick={() => {
+                                props.follow(u.id)
+                            }}
+                            style={{
+                                backgroundColor: "#f6f6f6",
+                                fontFamily: "Monserrat",
+                                fontSize: "20px",
+                                boxShadow: "inset 0 20px 20px #ffffff",
+                                borderRadius: "8px",
+                                touchAction: "0 -20px 20px #ffffff",
+                                zoom: "1",
+                                cursor: "pointer"
+                            }
+                            }>Follow</button>
+                    }
+                </div>
+            </div>)
+        }
         <div>
-            <Paginator
-                currentPage={currentPage}
-                onPageChanged={onPageChanged}
-                totalUsersCount={totalUsersCount}
-                pageSize={pageSize}
-                portionSize={portionSize}
-            />
-            <div>
-                {
-                    users.map(u => (
-                            <User user={u}
-                                  key={u.id}
-                                  followingInProgress={followingInProgress}
-                                  follow={follow}
-                                  unfollow={unfollow}
-
-                            />
-                        )
-                    )
-                }
-            </div>
+            <Pagination totalCount={pagesCount} onPageChanged={props.onPageChanged}/>
         </div>
-    )
+    </div>
 }
-
 
 export default Users
