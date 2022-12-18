@@ -14,7 +14,7 @@ type PostPropsType = {
 const Post = (props: PostPropsType) => {
     return (
         <div className={styles.postItemWrapper}>
-            <img src='https://yt3.ggpht.com/ytc/AKedOLQTOrbuh25vkoon4ROhjjbJXX3jVrEaAYK6BDUB=s900-c-k-c0x00ffffff-no-rj' alt='post-photo' />
+            <img src='https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921' alt='loading' />
             <div className={styles.postItem}>
                 {props.message}
                 <div className={styles.postLikeTimeWrapper}>
