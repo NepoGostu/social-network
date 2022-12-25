@@ -1,0 +1,43 @@
+.message{
+    position: relative;
+    margin-left: 20px;
+    right: -210px;
+    width: 170px;
+    background-color: rgba(199, 199, 199, 0.88);
+    border: 2px solid rgba(82, 75, 75, 0.27);
+    border-top-left-radius: 15px;
+    padding: 8px;
+    color: rgb(0, 0, 0);
+    font-size: 18px;
+    font-family: 'Monserrat';
+    word-wrap: break-word;
+}
+
+.myMessage {
+    grid-area: d;
+    margin: 15px 15px 15px 25px;
+    width: 170px;
+    background-color: rgba(199, 199, 199, 0.88);
+    border: rgba(199, 199, 199, 0.27);
+    border-top-right-radius: 15px;
+    padding: 8px;
+    color: #000000;
+    font-size: 18px;
+    font-family: 'Monserrat';
+    word-wrap: break-word;
+}
+.messages {
+    grid-area: b;
+    height: 74vh;
+    border: 2px solid rgba(0, 0, 0, 0.27);
+    border-right-style: none;
+    border-left-style: none;
+    border-top-style: none;
+    overflow: auto;
+}
+.messageTime{
+    margin-top: 5px;
+    color: #000000;
+    font-size: 15px;
+    margin-left: 120px;
+}
