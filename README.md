@@ -6,7 +6,7 @@ cтраничка с профилем,
 страничка с сообщениями, 
 все кликабельно, можно потыкать - посмотреть :)  
 
-#### Ссылка на проект: https://nepogostu.github.io/_Linkd/  
+#### Ссылка на проект: https://nepogostu.github.io/social-network/  
 
 ### Используемые библиотеки:  
 1. material-ui - https://material-ui.com/
